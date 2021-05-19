@@ -1,7 +1,10 @@
 import {
   app, BrowserWindow, nativeTheme, ipcMain, dialog
 } from 'electron'
+import path from 'path'
 import mapper from './sqlite-mapper'
+
+const filePath = path.join(app.getPath('userData'), '/some.files')
 
 try {
   if (process.platform === 'win32' && nativeTheme.shouldUseDarkColors === true) {
@@ -74,8 +77,21 @@ ipcMain.on('choiceWorkspace', (event, ...args) => {
 
     console.log(result.canceled)
     console.log(result.filePaths)
-    event.reply('choiceWorkspace-reply', result)
+    event.returnValue = result
   }).catch((err) => {
     console.log(err)
+    event.returnValue = err
   })
+})
+
+ipcMain.on('test', (event, ...args) => {
+  event.reply('test-reply', 'aaaaaaaa')
+  // mapper.get('select root_path from system_info', (err, row) => {
+  //   if (err) {
+  //     return console.error(`sqllite-get : ${err.message} : ${row}`)
+  //   }
+
+  //   console.log(`no error-sqllite-get : ${err} : ${row}`)
+  //   event.reply('test-reply', row)
+  // })
 })

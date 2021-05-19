@@ -1,9 +1,10 @@
 import sqlite from 'sqlite3'
 import path from 'path'
 
-const dbPath = path.resolve(__dirname, 'workspace.db')
+const dbPath = path.resolve(process.resourcesPath, 'workspace.db')
 
-const db = new sqlite.Database(dbPath, sqlite.OPEN_READWRITE || sqlite.OPEN_CREATE, (err) => {
+// eslint-disable-next-line no-bitwise
+const db = new sqlite.Database(dbPath, sqlite.OPEN_READWRITE | sqlite.OPEN_CREATE, (err) => {
   if (err) {
     console.error(`err : ${err.message}`)
   } else {
@@ -25,6 +26,10 @@ const insert = (sql) => {
   })
 }
 
+const get = (sql, callback) => {
+  db.get(sql, callback)
+}
+
 const close = () => {
   db.close((err) => {
     if (err) {
@@ -35,4 +40,4 @@ const close = () => {
   })
 }
 
-export default { insert, close }
+export default { insert, get, close }
