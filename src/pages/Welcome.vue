@@ -1,15 +1,18 @@
 <template>
   <div
-    class="fullscreen justify-center full-height full-width text-center"
-    style="margin-top: 32px;"
+    class="fullscreen"
+    style="margin-top: 32px; background-image: url('img/vijw60l9bug61.jpg');
+    background-size: cover;"
   >
-    <q-parallax src="~assets/vijw60l9bug61.jpg" style="min-height: -webkit-fill-available;">
-      <h3 class="text-white">Workspace</h3>
-      <q-btn icon="folder" color="orange" :loading="loading"
+    <div class="text-white text-h3 fixed-center text-center">
+      <div>Workspace</div>
+      <div>
+        <q-btn icon="folder" color="orange" :loading="loading"
         outline label="Select a directory as workspace" @click="handleChoiceBtnClicked()" />
-      <!-- <q-btn icon="folder" color="orange"
+      </div>
+    </div>
+    <!-- <q-btn icon="folder" color="orange"
         outline label="get" @click="testClicked()" /> -->
-    </q-parallax>
   </div>
 </template>
 
