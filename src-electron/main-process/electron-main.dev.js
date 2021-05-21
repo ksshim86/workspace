@@ -17,7 +17,7 @@ app.whenReady().then(() => {
 
     // Install vuejs devtools
     installExtension(VUEJS_DEVTOOLS)
-      .then(name => {
+      .then((name) => {
         console.log(`Added Extension: ${name}`)
         // get main window
         const win = BrowserWindow.getFocusedWindow()
@@ -32,7 +32,7 @@ app.whenReady().then(() => {
           })
         }
       })
-      .catch(err => {
+      .catch((err) => {
         console.log('An error occurred: ', err)
       })
   }, 250)

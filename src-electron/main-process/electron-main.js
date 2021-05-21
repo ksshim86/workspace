@@ -84,14 +84,21 @@ ipcMain.on('choiceWorkspace', (event, ...args) => {
   })
 })
 
-ipcMain.on('test', (event, ...args) => {
-  event.reply('test-reply', 'aaaaaaaa')
-  // mapper.get('select root_path from system_info', (err, row) => {
-  //   if (err) {
-  //     return console.error(`sqllite-get : ${err.message} : ${row}`)
-  //   }
+ipcMain.on('isWorkspace', (event, ...args) => {
+  mapper.get('select root_path as rootPath from system_info', (err, row) => {
+    let isWorkspace = false
 
-  //   console.log(`no error-sqllite-get : ${err} : ${row}`)
-  //   event.reply('test-reply', row)
-  // })
+    if (err) {
+      console.error(`isWorkspace err : ${err}`)
+    } else {
+      console.log(row)
+
+      if (row !== undefined) {
+        isWorkspace = true
+        console.log(`isWorkspace rootPath : ${row.rootPath}`)
+      }
+    }
+
+    event.reply('isWorkspace-reply', isWorkspace)
+  })
 })
