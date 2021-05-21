@@ -5,7 +5,8 @@
         <bar />
       </q-header>
       <q-page-container >
-        <q-layout view="lhh lpR fFf" v-if="this.isWorkspace">
+        <!-- <q-layout view="lhh lpR fFf" v-if="this.isWorkspace"> -->
+        <q-layout view="lhh Lpr lff" v-if="this.isWorkspace">
           <q-header bordered class="bg-primary text-white" height-hint="98">
             <q-toolbar>
               <q-btn dense flat round icon="menu" @click="left = !left" />
@@ -17,16 +18,12 @@
                 Title
               </q-toolbar-title>
             </q-toolbar>
-            <q-tabs align="left">
-              <q-route-tab to="/page1" label="Page One" />
-              <q-route-tab to="/page2" label="Page Two" />
-              <q-route-tab to="/page3" label="Page Three" />
-            </q-tabs>
           </q-header>
-          <q-drawer show-if-above v-model="left" side="left" bordered>
+          <q-drawer show-if-above v-model="left" side="left"
+            bordered :width="200" :breakpoint="400">
             <!-- drawer content -->
           </q-drawer>
-          <q-page-container>
+          <q-page-container id="page-container">
             <router-view />
           </q-page-container>
         </q-layout>
@@ -57,8 +54,14 @@ export default {
   mounted() {
     ipcRenderer.on('isWorkspace-reply', (event, arg) => {
       this.isWorkspace = arg
+
+      if (arg) {
+        this.$router.push('/todo')
+      } else {
+        this.$router.push('/welcome')
+      }
     })
-  },
+  }
 }
 </script>
 

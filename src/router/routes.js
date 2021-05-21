@@ -1,12 +1,14 @@
 const routes = [
   {
     path: '/',
-    component: () => import('pages/Welcome.vue'),
-    children: [
-      { path: '', component: () => import('pages/Index.vue') }
-    ]
+    component: () => import('pages/Index.vue')
+    // children: [
+    //   { path: 'welcome', component: () => import('pages/Welcome.vue') },
+    //   { path: 'todo', component: () => import('pages/Welcome.vue') }
+    // ]
   },
-
+  { path: '/welcome', component: () => import('pages/Welcome.vue') },
+  { path: '/todo', component: () => import('pages/TodoPage.vue') },
   // Always leave this as last one,
   // but you can also remove it
   {

@@ -1,14 +1,10 @@
 <template>
-  <div
-    class="fullscreen"
-    style="margin-top: 32px; background-image: url('img/vijw60l9bug61.jpg');
-    background-size: cover;"
-  >
+  <div id="welcome-page" class="fullscreen">
     <div class="text-white text-h3 fixed-center text-center">
       <div>Workspace</div>
       <div>
         <q-btn icon="folder" color="orange" :loading="loading"
-        outline label="Select a directory as workspace" @click="handleChoiceBtnClicked()" />
+        outline label="Select a directory as workspace" @click="handleChoiceBtnClicked" />
       </div>
     </div>
     <!-- <q-btn icon="folder" color="orange"
@@ -48,5 +44,9 @@ export default {
 </script>
 
 <style>
-
+#welcome-page {
+  margin-top: 32px;
+  background-size: cover;
+  background-image: url(~assets/vijw60l9bug61.jpg);
+}
 </style>

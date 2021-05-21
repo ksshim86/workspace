@@ -1,6 +1,6 @@
 <template>
-  <q-bar class="q-electron-drag bg-black text-white">
-    <div>Workspace <q-badge outline align="middle" color="orange">beta v0.0.1</q-badge></div>
+  <q-bar id="bar" class="q-electron-drag text-white">
+    <div>Workspace <q-badge outline align="middle" color="orange">beta</q-badge></div>
     <q-space />
     <q-btn dense flat icon="minimize" @click="minimize" />
     <q-btn dense flat icon="crop_square" @click="maximize" />
@@ -12,7 +12,6 @@ export default {
   name: 'Bar',
   methods: {
     minimize() {
-      console.log('minimize')
       if (process.env.MODE === 'electron') {
         this.$q.electron.remote.BrowserWindow.getFocusedWindow().minimize()
       }
@@ -36,3 +35,8 @@ export default {
   }
 }
 </script>
+<style lang="scss" scoped>
+  #bar {
+    background-color: $dark;
+  }
+</style>
