@@ -7,8 +7,6 @@
         outline label="Select a directory as workspace" @click="handleChoiceBtnClicked" />
       </div>
     </div>
-    <!-- <q-btn icon="folder" color="orange"
-        outline label="get" @click="testClicked()" /> -->
   </div>
 </template>
 

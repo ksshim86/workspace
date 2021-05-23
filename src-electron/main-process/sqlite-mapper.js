@@ -18,12 +18,8 @@ db.run('create table system_info(root_path text null)', (err) => {
   }
 })
 
-const insert = (sql) => {
-  db.run(sql, (err) => {
-    if (err) {
-      console.error(`err : ${err.message}`)
-    }
-  })
+const insert = (sql, callback) => {
+  db.run(sql, callback)
 }
 
 const get = (sql, callback) => {

@@ -31,6 +31,8 @@ function createWindow () {
   mainWindow = new BrowserWindow({
     width: 1000,
     height: 600,
+    minWidth: 490,
+    minHeight: 350,
     titleBarStyle: 'customButtonsOnHover',
     frame: false,
     // transparent: true,
@@ -100,5 +102,27 @@ ipcMain.on('isWorkspace', (event, ...args) => {
     }
 
     event.reply('isWorkspace-reply', isWorkspace)
+  })
+})
+
+ipcMain.on('createWork', (event, args) => {
+  const work = JSON.parse(JSON.stringify(args))
+  work.path = '/'
+
+  const sql = `insert into work (name, key, path) values ('${work.name}', '${work.key}', '/');`
+
+  mapper.insert(sql, (err) => {
+    const obj = {
+      result: true,
+      message: ''
+    }
+
+    if (err) {
+      console.error(`err : ${err.message}`)
+      obj.result = false
+      obj.message = err.message
+    }
+
+    event.reply('createWork-reply', obj)
   })
 })

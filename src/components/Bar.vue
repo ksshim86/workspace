@@ -37,6 +37,6 @@ export default {
 </script>
 <style lang="scss" scoped>
   #bar {
-    background-color: $dark;
+    background-color: #202225;
   }
 </style>
