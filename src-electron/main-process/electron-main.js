@@ -2,9 +2,8 @@ import {
   app, BrowserWindow, nativeTheme, ipcMain, dialog
 } from 'electron'
 import path from 'path'
+import fs from 'fs'
 import mapper from './sqlite-mapper'
-
-const filePath = path.join(app.getPath('userData'), '/some.files')
 
 try {
   if (process.platform === 'win32' && nativeTheme.shouldUseDarkColors === true) {
@@ -32,7 +31,7 @@ function createWindow () {
     width: 1000,
     height: 600,
     minWidth: 490,
-    minHeight: 350,
+    minHeight: 360,
     titleBarStyle: 'customButtonsOnHover',
     frame: false,
     // transparent: true,
@@ -69,12 +68,20 @@ app.on('activate', () => {
   }
 })
 
-ipcMain.on('choiceWorkspace', (event, ...args) => {
+const ROOT_PATH = ''
+const WORK_DIR = 'work'
+
+ipcMain.on('choiceWorkspace', (event, args) => {
   dialog.showOpenDialog({
     properties: ['promptToCreate', 'openDirectory']
   }).then((result) => {
     if (!result.canceled) {
       mapper.insert(`insert into system_info (root_path) values ('${result.filePaths}')`)
+      const workDirPath = path.resolve(result.filePaths, `/${WORK_DIR}`)
+
+      fs.mkdir(workDirPath, { recursive: true }, (err) => {
+        console.log(err)
+      })
     }
 
     console.log(result.canceled)
@@ -86,7 +93,7 @@ ipcMain.on('choiceWorkspace', (event, ...args) => {
   })
 })
 
-ipcMain.on('isWorkspace', (event, ...args) => {
+ipcMain.on('isWorkspace', (event, args) => {
   mapper.get('select root_path as rootPath from system_info', (err, row) => {
     let isWorkspace = false
 
@@ -107,7 +114,7 @@ ipcMain.on('isWorkspace', (event, ...args) => {
 
 ipcMain.on('createWork', (event, args) => {
   const work = JSON.parse(JSON.stringify(args))
-  work.path = '/'
+  work.path = path.resolve(ROOT_PATH, WORK_DIR, work.key)
 
   const sql = `insert into work (name, key, path) values ('${work.name}', '${work.key}', '/');`
 
@@ -124,5 +131,28 @@ ipcMain.on('createWork', (event, args) => {
     }
 
     event.reply('createWork-reply', obj)
+  })
+})
+
+ipcMain.on('getWork', (event, args) => {
+  const work = JSON.parse(JSON.stringify(args))
+  work.path = '/'
+
+  const sql = 'select id, name, key, path, del_yn as delYn from work'
+
+  mapper.get(sql, (err, row) => {
+    const obj = {
+      result: true,
+      message: '',
+      row
+    }
+
+    if (err) {
+      console.error(`err : ${err.message}`)
+      obj.result = false
+      obj.message = err.message
+    }
+
+    event.reply('getWork-reply', obj)
   })
 })

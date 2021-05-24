@@ -4,6 +4,7 @@
     <div class="todo-page row items-start" v-if="isWork">
       <q-scroll-area ref="scroll" class="fit col"
         :style="`height: ${this.$attrs.contentHeight}px !important`">
+        <todo-list />
       </q-scroll-area>
     </div>
     <div class="todo-page row items-start" v-else>
@@ -40,24 +41,19 @@
 </template>
 
 <script>
-// import TodoCard from 'src/components/TodoCard.vue'
+
 import TodoToolBar from 'src/components/TodoToolBar.vue'
 import { ipcRenderer } from 'electron'
+import TodoList from 'src/components/TodoList.vue'
 
 export default {
-  components: { TodoToolBar },
+  components: { TodoToolBar, TodoList },
   name: 'TodoPage',
   data() {
     return {
-      isWork: false,
+      isWork: true,
       isNewWork: false,
-      work: {
-        id: '',
-        name: '',
-        key: '',
-        path: '',
-        delYn: ''
-      },
+      works: [],
       newWork: {
         name: '',
         key: ''

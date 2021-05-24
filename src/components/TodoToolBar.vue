@@ -1,7 +1,7 @@
 <template>
   <q-toolbar class="shadow-1 text-white" style="min-height: 50px; background-color: #24292E;">
-    <q-toolbar-title>
-      <q-btn flat icon="tag" label="___">
+    <q-toolbar-title shrink>
+      <q-btn flat icon="tag" label="JAVASCRIPT">
         <q-menu fit anchor="bottom left" self="top left">
           <q-item clickable>
             <q-item-section>New tab</q-item-section>
@@ -12,6 +12,16 @@
         </q-menu>
       </q-btn>
     </q-toolbar-title>
+    <div :style="`max-width: 400px;`">
+      <q-tabs
+        v-model="tab"
+        dense
+      >
+        <q-tab name="mails" label="최신" />
+        <q-tab name="alarms" label="상태" />
+      </q-tabs>
+    </div>
+    <q-space />
     <q-select
       ref="search" dark dense standout use-input hide-selected
       class="GL__toolbar-select"
@@ -76,7 +86,8 @@ export default {
     return {
       text: '',
       options: null,
-      filteredOptions: []
+      filteredOptions: [],
+      tab: 'mails'
     }
   },
   methods: {
