@@ -37,6 +37,12 @@
         </q-card-section>
       </q-card>
     </q-dialog>
+    <q-dialog v-model="isCreateTodo">
+      <todo />
+    </q-dialog>
+    <q-page-sticky position="bottom-right" :offset="[18, 18]">
+      <q-btn fab icon="add" color="orange" @click="isCreateTodo = true" />
+    </q-page-sticky>
   </div>
 </template>
 
@@ -45,14 +51,16 @@
 import TodoToolBar from 'src/components/TodoToolBar.vue'
 import { ipcRenderer } from 'electron'
 import TodoList from 'src/components/TodoList.vue'
+import Todo from 'src/components/Todo'
 
 export default {
-  components: { TodoToolBar, TodoList },
+  components: { TodoToolBar, TodoList, Todo },
   name: 'TodoPage',
   data() {
     return {
       isWork: true,
       isNewWork: false,
+      isCreateTodo: false,
       works: [],
       newWork: {
         name: '',

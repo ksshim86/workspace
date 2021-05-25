@@ -1,5 +1,5 @@
 <template>
-  <q-card class="todo-card q-ma-md" flat style="max-width: 433px;" dark>
+  <q-card dark class="todo-card q-ma-md" flat style="max-width: 433px;">
     <q-card-section class="row items-center q-py-sm">
       <div class="text-overline">
         #KLID-{{ id }}
