@@ -13,8 +13,7 @@ app.whenReady().then(() => {
   // allow for a small delay for mainWindow to be created
   setTimeout(() => {
     // Install `electron-debug` with `devtron`
-    electronDebug({ showDevTools: false })
-
+    electronDebug({ showDevTools: true })
     // Install vuejs devtools
     installExtension(VUEJS_DEVTOOLS)
       .then((name) => {

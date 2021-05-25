@@ -77,7 +77,7 @@ ipcMain.on('choiceWorkspace', (event, args) => {
   }).then((result) => {
     if (!result.canceled) {
       mapper.insert(`insert into system_info (root_path) values ('${result.filePaths}')`)
-      const workDirPath = path.resolve(result.filePaths, `/${WORK_DIR}`)
+      const workDirPath = path.resolve(result.filePaths[0], `${WORK_DIR}`)
 
       fs.mkdir(workDirPath, { recursive: true }, (err) => {
         console.log(err)
@@ -114,23 +114,39 @@ ipcMain.on('isWorkspace', (event, args) => {
 
 ipcMain.on('createWork', (event, args) => {
   const work = JSON.parse(JSON.stringify(args))
-  work.path = path.resolve(ROOT_PATH, WORK_DIR, work.key)
 
-  const sql = `insert into work (name, key, path) values ('${work.name}', '${work.key}', '/');`
-
-  mapper.insert(sql, (err) => {
-    const obj = {
-      result: true,
-      message: ''
-    }
-
+  mapper.get('select root_path as rootPath from system_info', (err, row) => {
     if (err) {
-      console.error(`err : ${err.message}`)
-      obj.result = false
-      obj.message = err.message
-    }
+      console.error(`isWorkspace err : ${err}`)
+    } else {
+      console.log(row)
 
-    event.reply('createWork-reply', obj)
+      if (row !== undefined) {
+        work.path = path.resolve(row.rootPath, WORK_DIR, work.key)
+        console.log(`work.path : ${work.path}`)
+
+        const sql = `insert into work (name, key, path) values ('${work.name}', '${work.key}', '${work.path}');`
+
+        mapper.insert(sql, (err2) => {
+          const obj = {
+            result: true,
+            message: ''
+          }
+
+          if (err2) {
+            console.error(`errs : ${err2.message}`)
+            obj.result = false
+            obj.message = err.message
+          }
+
+          fs.mkdir(work.path, { recursive: true }, (err3) => {
+            console.log(err3)
+          })
+
+          event.reply('createWork-reply', obj)
+        })
+      }
+    }
   })
 })
 
