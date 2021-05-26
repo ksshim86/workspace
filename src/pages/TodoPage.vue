@@ -60,6 +60,9 @@ export default {
       }
     }
   },
+  beforeCreate() {
+    ipcRenderer.send('getWork')
+  },
   mounted() {
     const { scroll } = this.$refs
 
@@ -69,15 +72,23 @@ export default {
 
     ipcRenderer.on('createWork-reply', (event, arg) => {
       console.log(arg)
+
       if (arg.result) {
-        console.log('suceess')
         this.isNewWork = false
+        this.isWork = true
+
         this.newWork = {
           name: '',
           key: ''
         }
+
         this.notifyCreatedWork()
       }
+    })
+
+    ipcRenderer.on('getWork-reply', (event, arg) => {
+      console.log(arg)
+      // !todo: sqlite table 미리 생성 기능
     })
   },
   computed: {
