@@ -1,6 +1,6 @@
 <template>
   <div>
-    <todo-tool-bar />
+    <todo-tool-bar :works="works" />
     <div class="todo-page row items-start" v-if="isWork">
       <q-scroll-area ref="scroll" class="fit col"
         :style="`height: ${this.$attrs.contentHeight}px !important`">
@@ -62,6 +62,18 @@ export default {
   },
   beforeCreate() {
     ipcRenderer.send('getWork')
+
+    ipcRenderer.on('getWork-reply', (event, arg) => {
+      console.log(arg)
+      if (arg.result) {
+        this.isWork = true
+        this.works.push(arg.row)
+      }
+    })
+  },
+  destroyed() {
+    console.log('destroyed')
+    ipcRenderer.removeListener('getWork-reply')
   },
   mounted() {
     const { scroll } = this.$refs
@@ -84,11 +96,6 @@ export default {
 
         this.notifyCreatedWork()
       }
-    })
-
-    ipcRenderer.on('getWork-reply', (event, arg) => {
-      console.log(arg)
-      // !todo: sqlite table 미리 생성 기능
     })
   },
   computed: {

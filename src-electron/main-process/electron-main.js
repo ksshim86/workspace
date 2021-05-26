@@ -7,10 +7,12 @@ import mapper from './sqlite-mapper'
 
 try {
   if (process.platform === 'win32' && nativeTheme.shouldUseDarkColors === true) {
+    // eslint-disable-next-line global-require
     require('fs').unlinkSync(require('path').join(app.getPath('userData'), 'DevTools Extensions'))
   }
 
   nativeTheme.themeSource = 'dark'
+  // eslint-disable-next-line no-empty
 } catch (_) { }
 
 /**
@@ -18,6 +20,7 @@ try {
  * The reason we are setting it here is that the path needs to be evaluated at runtime
  */
 if (process.env.PROD) {
+  // eslint-disable-next-line no-underscore-dangle
   global.__statics = __dirname
 }
 
@@ -70,7 +73,7 @@ app.on('activate', () => {
 
 const WORK_DIR = 'work'
 
-ipcMain.on('selectWorkspace', (event, args) => {
+ipcMain.on('selectWorkspace', (event) => {
   const obj = {
     result: true,
     message: '',
@@ -100,7 +103,7 @@ ipcMain.on('selectWorkspace', (event, args) => {
   })
 })
 
-ipcMain.on('isWorkspace', (event, args) => {
+ipcMain.on('isWorkspace', (event) => {
   mapper.get('select root_path as rootPath from system_info', (err, row) => {
     let isWorkspace = false
 
@@ -157,10 +160,10 @@ ipcMain.on('createWork', (event, args) => {
   })
 })
 
-ipcMain.on('getWork', (event, args) => {
-  const sql = 'select id, name, key, path, del_yn as delYn from work'
+ipcMain.on('getWork', (event) => {
+  const sql = 'select id, name, name as label, key, path, del_yn as delYn from work'
 
-  mapper.get(sql, (err, row) => {
+  mapper.each(sql, (err, row) => {
     const obj = {
       result: true,
       message: '',
@@ -172,6 +175,8 @@ ipcMain.on('getWork', (event, args) => {
       obj.result = false
       obj.message = err.message
     }
+
+    console.log(row)
 
     event.reply('getWork-reply', obj)
   })

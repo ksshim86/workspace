@@ -1,16 +1,26 @@
 <template>
   <q-toolbar class="shadow-1 text-white" style="min-height: 50px; background-color: #24292E;">
     <q-toolbar-title shrink>
-      <q-btn flat icon="tag" label="JAVASCRIPT">
+      <q-select
+        dark
+        filled
+        dense
+        use-chips
+        v-model="selectedWork"
+        multiple
+        :options="works"
+        :label="selectedWork != null ? selectedWork.id : ''"
+        :style="`width: 300px;`"
+      />
+      <!-- <q-btn flat icon="tag" label="ALL">
         <q-menu fit anchor="bottom left" self="top left">
-          <q-item clickable>
-            <q-item-section>New tab</q-item-section>
-          </q-item>
-          <q-item clickable>
-            <q-item-section>New incognito tab</q-item-section>
-          </q-item>
+          <q-list style="min-width: 100px">
+            <q-item v-for="work in works" :key="work.id" clickable>
+              <q-item-section>{{work.name}}</q-item-section>
+            </q-item>
+          </q-list>
         </q-menu>
-      </q-btn>
+      </q-btn> -->
     </q-toolbar-title>
     <div :style="`max-width: 400px;`">
       <q-tabs
@@ -81,9 +91,16 @@ const stringOptions = [
 ]
 
 export default {
-  name: 'ToolBar',
+  name: 'TodoToolBar',
+  props: {
+    works: {
+      type: Array,
+      default: null
+    }
+  },
   data() {
     return {
+      selectedWork: null,
       text: '',
       options: null,
       filteredOptions: [],

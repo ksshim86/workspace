@@ -26,6 +26,10 @@ const get = (sql, callback) => {
   db.get(sql, callback)
 }
 
+const each = (sql, callback) => {
+  db.each(sql, callback)
+}
+
 const close = () => {
   db.close((err) => {
     if (err) {
@@ -36,4 +40,6 @@ const close = () => {
   })
 }
 
-export default { insert, get, close }
+export default {
+  insert, get, close, each
+}
