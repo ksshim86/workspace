@@ -68,28 +68,35 @@ app.on('activate', () => {
   }
 })
 
-const ROOT_PATH = ''
 const WORK_DIR = 'work'
 
-ipcMain.on('choiceWorkspace', (event, args) => {
+ipcMain.on('selectWorkspace', (event, args) => {
+  const obj = {
+    result: true,
+    message: '',
+    canceled: false
+  }
+
   dialog.showOpenDialog({
     properties: ['promptToCreate', 'openDirectory']
   }).then((result) => {
+    obj.canceled = result.canceled
+
     if (!result.canceled) {
       mapper.insert(`insert into system_info (root_path) values ('${result.filePaths}')`)
       const workDirPath = path.resolve(result.filePaths[0], `${WORK_DIR}`)
 
-      fs.mkdir(workDirPath, { recursive: true }, (err) => {
+      fs.mkdir(workDirPath, { recursive: false }, (err) => {
         console.log(err)
+        event.returnValue = obj
       })
     }
-
-    console.log(result.canceled)
-    console.log(result.filePaths)
-    event.returnValue = result
   }).catch((err) => {
     console.log(err)
-    event.returnValue = err
+
+    obj.result = false
+    obj.message = err
+    event.returnValue = obj
   })
 })
 
@@ -151,9 +158,6 @@ ipcMain.on('createWork', (event, args) => {
 })
 
 ipcMain.on('getWork', (event, args) => {
-  const work = JSON.parse(JSON.stringify(args))
-  work.path = '/'
-
   const sql = 'select id, name, key, path, del_yn as delYn from work'
 
   mapper.get(sql, (err, row) => {
