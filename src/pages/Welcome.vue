@@ -3,8 +3,8 @@
     <div class="text-white text-h3 fixed-center text-center">
       <div>Workspace</div>
       <div>
-        <q-btn icon="folder" color="orange" :loading="loading"
-        outline label="Select a directory as workspace" @click="handleChoiceBtnClicked" />
+        <q-btn icon="folder" color="orange"
+        outline label="Select a directory as workspace" @click="handleSelectWorkspaceBtnClicked" />
       </div>
     </div>
   </div>
@@ -15,27 +15,13 @@ import { ipcRenderer } from 'electron'
 
 export default {
   name: 'Welcome',
-  data() {
-    return {
-      loading: false,
-    }
-  },
-  mounted() {
-    ipcRenderer.on('test-reply', (event, arg) => {
-      console.log(arg)
-      // ipcRenderer.removeAllListeners('test-reply')
-    })
-  },
   methods: {
-    handleChoiceBtnClicked() {
-      this.loading = true
+    handleSelectWorkspaceBtnClicked() {
+      const arg = ipcRenderer.sendSync('selectWorkspace', 'ping')
 
-      const result = ipcRenderer.sendSync('choiceWorkspace', 'ping')
-      console.log(result)
-      this.loading = false
-    },
-    testClicked() {
-      ipcRenderer.send('test', 'ping')
+      if (arg.result && !arg.canceled) {
+        this.$router.push('/')
+      }
     }
   }
 }
