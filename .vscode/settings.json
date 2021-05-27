@@ -1,7 +1,12 @@
 {
   "vetur.validation.template": false,
   "vetur.format.enable": false,
-  "eslint.validate": ["javascript", "javascriptreact", "typescript", "vue"],
-  
-  "vetur.experimental.templateInterpolationService": true
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "vue"
+  ],
+  // true일 때, computed 메소드에 리턴이 없으면 에러 발생하여 false로 변경
+  "vetur.experimental.templateInterpolationService": false
 }
