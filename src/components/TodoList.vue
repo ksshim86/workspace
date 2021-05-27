@@ -12,7 +12,7 @@ import Todo from './Todo.vue'
 export default {
   components: { Todo },
   name: 'TodoList',
-  data() {
+  data () {
     return {
       todos: [{}, {}]
     }

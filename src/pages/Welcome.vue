@@ -16,7 +16,7 @@ import { ipcRenderer } from 'electron'
 export default {
   name: 'Welcome',
   methods: {
-    handleSelectWorkspaceBtnClicked() {
+    handleSelectWorkspaceBtnClicked () {
       const arg = ipcRenderer.sendSync('selectWorkspace', 'ping')
 
       if (arg.result && !arg.canceled) {

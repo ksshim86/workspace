@@ -1,6 +1,7 @@
 <template>
   <div>
     <todo-tool-bar :works="works" />
+    <q-btn label="testBTN" @click="testFunc" />
     <div class="todo-page row items-start" v-if="isWork">
       <q-scroll-area ref="scroll" class="fit col"
         :style="`height: ${this.$attrs.contentHeight}px !important`">
@@ -41,7 +42,7 @@
 </template>
 
 <script>
-
+import { mapGetters } from 'vuex'
 import TodoToolBar from 'src/components/TodoToolBar.vue'
 import { ipcRenderer } from 'electron'
 import TodoList from 'src/components/TodoList.vue'
@@ -49,7 +50,7 @@ import TodoList from 'src/components/TodoList.vue'
 export default {
   components: { TodoToolBar, TodoList },
   name: 'TodoPage',
-  data() {
+  data () {
     return {
       isWork: false,
       isNewWork: false,
@@ -60,7 +61,7 @@ export default {
       }
     }
   },
-  beforeCreate() {
+  beforeCreate () {
     ipcRenderer.send('getWork')
 
     ipcRenderer.on('getWork-reply', (event, arg) => {
@@ -71,11 +72,11 @@ export default {
       }
     })
   },
-  destroyed() {
+  destroyed () {
     console.log('destroyed')
     ipcRenderer.removeListener('getWork-reply')
   },
-  mounted() {
+  mounted () {
     const { scroll } = this.$refs
 
     if (scroll) {
@@ -98,16 +99,27 @@ export default {
       }
     })
   },
-  computed: {
-    isDisableCreateWorkBtn() {
-      return !(this.newWork.name && this.newWork.key)
+  watch: {
+    selectedWork (work) {
+      console.log(work)
     }
   },
+  computed: {
+    isDisableCreateWorkBtn () {
+      return !(this.newWork.name && this.newWork.key)
+    },
+    ...mapGetters({
+      selectedWork: 'todo/GET_SELECTED_WORK'
+    })
+  },
   methods: {
-    handleNewWorkClicked() {
+    testFunc () {
+      console.log(this.getSelectedWork)
+    },
+    handleNewWorkClicked () {
       ipcRenderer.send('createWork', this.newWork)
     },
-    notifyCreatedWork() {
+    notifyCreatedWork () {
       this.$q.notify({
         type: 'positive',
         color: 'light-blue-6',

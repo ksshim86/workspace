@@ -2,6 +2,8 @@
   <div id="q-app">
     <q-layout view="hhh Lpr lff" fit>
       <q-header>
+        <!-- title bar size 조정 고민 필요 -->
+        <!-- <bar style="top: 2px; position: relative;" /> -->
         <bar />
       </q-header>
       <q-drawer v-if="isWorkspace" show-if-above v-model="left" side="left"
@@ -68,7 +70,7 @@ const { offset } = dom
 export default {
   components: { Bar },
   name: 'App',
-  data() {
+  data () {
     return {
       left: false,
       mini: true,
@@ -76,11 +78,11 @@ export default {
       contentHeight: 0,
     }
   },
-  beforeCreate() {
+  beforeCreate () {
     console.log('beforeCreate')
     ipcRenderer.send('isWorkspace', 'ping')
   },
-  mounted() {
+  mounted () {
     ipcRenderer.on('isWorkspace-reply', (event, arg) => {
       this.isWorkspace = arg
 
@@ -92,7 +94,7 @@ export default {
     })
   },
   methods: {
-    onResize() {
+    onResize () {
       const containerTop = offset(this.$refs.container.$el).top
       const height = this.$refs.container.$el.clientHeight
 

@@ -1,26 +1,27 @@
 <template>
   <q-toolbar class="shadow-1 text-white" style="min-height: 50px; background-color: #24292E;">
     <q-toolbar-title shrink>
-      <q-select
-        dark
-        filled
-        dense
-        use-chips
-        v-model="selectedWork"
-        multiple
-        :options="works"
-        :label="selectedWork != null ? selectedWork.id : ''"
-        :style="`width: 300px;`"
-      />
-      <!-- <q-btn flat icon="tag" label="ALL">
+      <q-btn flat icon="tag"
+        :label="selectedWork ? selectedWork.name : 'ALL'"
+        style="width: 150px;"
+      >
         <q-menu fit anchor="bottom left" self="top left">
           <q-list style="min-width: 100px">
-            <q-item v-for="work in works" :key="work.id" clickable>
+            <q-item clickable v-close-popup @click="selectedWork = null">
+              <q-item-section>ALL</q-item-section>
+            </q-item>
+            <q-separator />
+            <q-item
+              v-for="work in works"
+              :key="work.id"
+              clickable v-close-popup
+              @click="selectedWork = work"
+            >
               <q-item-section>{{work.name}}</q-item-section>
             </q-item>
           </q-list>
         </q-menu>
-      </q-btn> -->
+      </q-btn>
     </q-toolbar-title>
     <div :style="`max-width: 400px;`">
       <q-tabs
@@ -84,6 +85,7 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 
 const stringOptions = [
   'quasarframework/quasar',
@@ -95,10 +97,10 @@ export default {
   props: {
     works: {
       type: Array,
-      default: null
+      default: Object
     }
   },
-  data() {
+  data () {
     return {
       selectedWork: null,
       text: '',
@@ -107,8 +109,16 @@ export default {
       tab: 'mails'
     }
   },
+  created () {
+    // work 조회
+  },
+  watch: {
+    selectedWork (work) {
+      this.setSelectedWork(work)
+    }
+  },
   methods: {
-    filter(val, update) {
+    filter (val, update) {
       if (this.options === null) {
         // load data
         setTimeout(() => {
@@ -139,7 +149,10 @@ export default {
             .map((op) => ({ label: op }))
         ]
       })
-    }
+    },
+    ...mapActions({
+      setSelectedWork: 'todo/SET_SELECTED_WORK'
+    })
   }
 }
 </script>

@@ -11,12 +11,12 @@
 export default {
   name: 'Bar',
   methods: {
-    minimize() {
+    minimize () {
       if (process.env.MODE === 'electron') {
         this.$q.electron.remote.BrowserWindow.getFocusedWindow().minimize()
       }
     },
-    maximize() {
+    maximize () {
       if (process.env.MODE === 'electron') {
         const win = this.$q.electron.remote.BrowserWindow.getFocusedWindow()
 
@@ -27,8 +27,14 @@ export default {
         }
       }
     },
-    close() {
+    close () {
       if (process.env.MODE === 'electron') {
+        const currentWindow = window.require('electron').remote.getCurrentWindow()
+
+        if (currentWindow.isDevToolsOpened()) {
+          currentWindow.closeDevTools()
+        }
+
         this.$q.electron.remote.BrowserWindow.getFocusedWindow().close()
       }
     }
