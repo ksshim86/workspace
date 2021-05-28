@@ -1,7 +1,6 @@
 <template>
   <div>
     <todo-tool-bar :works="works" />
-    <q-btn label="testBTN" @click="testFunc" />
     <div class="todo-page row items-start" v-if="isWork">
       <q-scroll-area ref="scroll" class="fit col"
         :style="`height: ${this.$attrs.contentHeight}px !important`">
@@ -66,8 +65,12 @@ export default {
     console.log(res)
 
     if (res.result) {
-      this.isWork = true
-      this.works = res.rows
+      if (res.rows.length > 0) {
+        this.isWork = true
+        this.works = res.rows
+      } else {
+        this.isWork = false
+      }
     }
 
     const todoRes = await ipcRenderer.invoke('getTodoList', 16)
@@ -111,9 +114,6 @@ export default {
     })
   },
   methods: {
-    testFunc () {
-      console.log(this.getSelectedWork)
-    },
     handleNewWorkClicked () {
       ipcRenderer.send('createWork', this.newWork)
     },
