@@ -18,8 +18,15 @@ db.run('create table system_info(root_path text null)', (err) => {
   }
 })
 
-const insert = (sql, callback) => {
-  db.run(sql, callback)
+const insert = async (sql, param) => {
+  const res = await new Promise((resolve, reject) => {
+    console.log(reject)
+    db.run(sql, param, (err) => {
+      resolve(err)
+    })
+  })
+
+  return res
 }
 
 const get = (sql, callback) => {
