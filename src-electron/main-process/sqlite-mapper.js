@@ -26,8 +26,15 @@ const get = (sql, callback) => {
   db.get(sql, callback)
 }
 
-const each = (sql, callback) => {
-  db.each(sql, callback)
+const all = async (sql, param) => {
+  const res = await new Promise((resolve, reject) => {
+    console.log(reject)
+    db.all(sql, param, (err, rows) => {
+      resolve({ err, rows })
+    })
+  })
+
+  return res
 }
 
 const close = () => {
@@ -41,5 +48,5 @@ const close = () => {
 }
 
 export default {
-  insert, get, close, each
+  insert, get, close, all
 }

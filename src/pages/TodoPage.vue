@@ -61,20 +61,18 @@ export default {
       }
     }
   },
-  beforeCreate () {
-    ipcRenderer.send('getWork')
+  async beforeCreate () {
+    const res = await ipcRenderer.invoke('getWork')
+    console.log(res)
 
-    ipcRenderer.on('getWork-reply', (event, arg) => {
-      console.log(arg)
-      if (arg.result) {
-        this.isWork = true
-        this.works.push(arg.row)
-      }
-    })
-  },
-  destroyed () {
-    console.log('destroyed')
-    ipcRenderer.removeListener('getWork-reply')
+    if (res.result) {
+      this.isWork = true
+      this.works = res.rows
+    }
+
+    const todoRes = await ipcRenderer.invoke('getTodoList', 16)
+
+    console.log(todoRes)
   },
   mounted () {
     const { scroll } = this.$refs

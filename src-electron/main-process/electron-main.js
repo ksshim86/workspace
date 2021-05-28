@@ -181,3 +181,58 @@ ipcMain.on('getWork', (event) => {
     event.reply('getWork-reply', obj)
   })
 })
+
+ipcMain.handle('getWork', async () => {
+  const obj = {
+    result: true,
+    message: '',
+    rows: {}
+  }
+
+  const sql = 'select id, name, name as label, key, path, del_yn as delYn from work'
+
+  const res = await mapper.all(sql, [])
+
+  if (res.error) {
+    console.error(`err : ${res.err.message}`)
+    obj.result = false
+    obj.message = res.err.message
+  }
+
+  obj.rows = res.rows
+
+  console.log(22222222222222)
+
+  return obj
+})
+
+ipcMain.handle('getTodoList', async (event, args) => {
+  const obj = {
+    result: true,
+    message: '',
+    rows: {}
+  }
+  console.log(`args : ${args}`)
+
+  const sql = `select
+                no, work_id as workId, title, content, status,
+                start_dt as startDt, due_dt as dueDt, del_yn as delYn
+              from
+                todo
+              where
+                work_id = ?
+              and
+                del_yn = 'N'`
+
+  const res = await mapper.all(sql, [args])
+
+  if (res.error) {
+    console.error(`err : ${res.err.message}`)
+    obj.result = false
+    obj.message = res.err.message
+  }
+
+  obj.rows = res.rows
+
+  return obj
+})
