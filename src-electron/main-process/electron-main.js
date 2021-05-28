@@ -122,6 +122,7 @@ ipcMain.on('isWorkspace', (event) => {
   })
 })
 
+// !TODO: async await로 수정해야함
 ipcMain.on('createWork', (event, args) => {
   const work = JSON.parse(JSON.stringify(args))
 
@@ -157,28 +158,6 @@ ipcMain.on('createWork', (event, args) => {
         })
       }
     }
-  })
-})
-
-ipcMain.on('getWork', (event) => {
-  const sql = 'select id, name, name as label, key, path, del_yn as delYn from work'
-
-  mapper.each(sql, (err, row) => {
-    const obj = {
-      result: true,
-      message: '',
-      row
-    }
-
-    if (err) {
-      console.error(`err : ${err.message}`)
-      obj.result = false
-      obj.message = err.message
-    }
-
-    console.log(row)
-
-    event.reply('getWork-reply', obj)
   })
 })
 
