@@ -73,9 +73,9 @@ export default {
       }
     }
 
+    // eslint-disable-next-line no-unused-vars
     const todoRes = await ipcRenderer.invoke('getTodoList', 16)
-
-    console.log(todoRes)
+    // !TODO: todolist 그리는 기능 개발
   },
   mounted () {
     const { scroll } = this.$refs
@@ -83,22 +83,6 @@ export default {
     if (scroll) {
       scroll.$el.firstElementChild.firstElementChild.className = 'absolute full-width row'
     }
-
-    ipcRenderer.on('createWork-reply', (event, arg) => {
-      console.log(arg)
-
-      if (arg.result) {
-        this.isNewWork = false
-        this.isWork = true
-
-        this.newWork = {
-          name: '',
-          key: ''
-        }
-
-        this.notifyCreatedWork()
-      }
-    })
   },
   watch: {
     selectedWork (work) {
@@ -114,8 +98,22 @@ export default {
     })
   },
   methods: {
-    handleNewWorkClicked () {
-      ipcRenderer.send('createWork', this.newWork)
+    async handleNewWorkClicked () {
+      const { result } = await ipcRenderer.invoke('createWork', this.newWork)
+
+      if (result) {
+        this.isNewWork = false
+        this.isWork = true
+
+        this.newWork = {
+          name: '',
+          key: ''
+        }
+
+        this.notifyCreatedWork()
+      }
+
+      // !TODO: work생성 후, work 조회 기능 추가 필요
     },
     notifyCreatedWork () {
       this.$q.notify({

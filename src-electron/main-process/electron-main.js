@@ -72,6 +72,7 @@ app.on('activate', () => {
 })
 
 const WORK_DIR = 'work'
+let ROOT_PATH = ''
 
 ipcMain.on('selectWorkspace', (event) => {
   const obj = {
@@ -103,62 +104,69 @@ ipcMain.on('selectWorkspace', (event) => {
   })
 })
 
-ipcMain.on('isWorkspace', (event) => {
-  mapper.get('select root_path as rootPath from system_info', (err, row) => {
-    let isWorkspace = false
+ipcMain.handle('isWorkspace', async () => {
+  const obj = {
+    result: true,
+    message: '',
+    row: {},
+    isWorkspace: false
+  }
+  const sql = `select 
+                root_path as rootPath 
+              from 
+                system_info`
 
-    if (err) {
-      console.error(`isWorkspace err : ${err}`)
-    } else {
-      console.log(row)
+  const { err, row } = await mapper.get(sql)
 
-      if (row !== undefined) {
-        isWorkspace = true
-        console.log(`isWorkspace rootPath : ${row.rootPath}`)
-      }
+  if (err) {
+    console.error(`isWorkspace err : ${err}`)
+    obj.result = false
+    obj.message = err
+  } else {
+    console.log(row)
+
+    if (row !== undefined) {
+      obj.isWorkspace = true
+      obj.row = row
+      ROOT_PATH = row.rootPath
     }
+  }
 
-    event.reply('isWorkspace-reply', isWorkspace)
-  })
+  return obj
 })
 
-// !TODO: async await로 수정해야함
-ipcMain.on('createWork', (event, args) => {
+ipcMain.handle('createWork', async (event, args) => {
+  const obj = {
+    result: true,
+    message: ''
+  }
   const work = JSON.parse(JSON.stringify(args))
+  work.path = path.resolve(ROOT_PATH, WORK_DIR, work.key)
 
-  mapper.get('select root_path as rootPath from system_info', (err, row) => {
-    if (err) {
-      console.error(`isWorkspace err : ${err}`)
-    } else {
-      console.log(row)
+  const params = [work.name, work.key, work.path]
+  const sql = 'insert into work (name, key, path) values (?, ?, ?)'
 
-      if (row !== undefined) {
-        work.path = path.resolve(row.rootPath, WORK_DIR, work.key)
-        console.log(`work.path : ${work.path}`)
+  const err = await mapper.insert(sql, params)
 
-        const sql = `insert into work (name, key, path) values ('${work.name}', '${work.key}', '${work.path}');`
+  if (err) {
+    console.error(`err : ${err.message}`)
+    obj.result = false
+    obj.message = err.message
+  } else {
+    const mkdirErr = await new Promise((resolve) => {
+      fs.mkdir(work.path, { recursive: true }, (e) => {
+        console.log(e)
+        resolve(e)
+      })
+    })
 
-        mapper.insert(sql, (err2) => {
-          const obj = {
-            result: true,
-            message: ''
-          }
-
-          if (err2) {
-            console.error(`errs : ${err2.message}`)
-            obj.result = false
-            obj.message = err.message
-          }
-
-          fs.mkdir(work.path, { recursive: true }, (err3) => {
-            console.log(err3)
-          })
-
-          event.reply('createWork-reply', obj)
-        })
-      }
+    if (mkdirErr !== null) {
+      obj.result = false
+      obj.message = mkdirErr
     }
-  })
+  }
+
+  return obj
 })
 
 ipcMain.handle('getWork', async () => {

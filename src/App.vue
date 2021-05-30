@@ -78,20 +78,16 @@ export default {
       contentHeight: 0,
     }
   },
-  beforeCreate () {
-    console.log('beforeCreate')
-    ipcRenderer.send('isWorkspace', 'ping')
-  },
-  mounted () {
-    ipcRenderer.on('isWorkspace-reply', (event, arg) => {
-      this.isWorkspace = arg
+  async beforeCreate () {
+    const { isWorkspace } = await ipcRenderer.invoke('isWorkspace')
 
-      if (this.isWorkspace) {
-        this.$router.push('/todo')
-      } else {
-        this.$router.push('/welcome')
-      }
-    })
+    this.isWorkspace = isWorkspace
+
+    if (this.isWorkspace) {
+      this.$router.push('/todo')
+    } else {
+      this.$router.push('/welcome')
+    }
   },
   methods: {
     onResize () {
