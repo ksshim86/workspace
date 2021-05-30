@@ -18,10 +18,10 @@ db.run('create table system_info(root_path text null)', (err) => {
   }
 })
 
-const insert = async (sql, param) => {
+const insert = async (sql, params) => {
   const res = await new Promise((resolve, reject) => {
     console.log(reject)
-    db.run(sql, param, (err) => {
+    db.run(sql, params, (err) => {
       resolve(err)
     })
   })
@@ -29,14 +29,20 @@ const insert = async (sql, param) => {
   return res
 }
 
-const get = (sql, callback) => {
-  db.get(sql, callback)
+const get = async (sql, params) => {
+  const res = await new Promise((resolve, reject) => {
+    db.get(sql, params, (err, row) => {
+      resolve({ err, row })
+    })
+  })
+
+  return res
 }
 
-const all = async (sql, param) => {
+const all = async (sql, params) => {
   const res = await new Promise((resolve, reject) => {
     console.log(reject)
-    db.all(sql, param, (err, rows) => {
+    db.all(sql, params, (err, rows) => {
       resolve({ err, rows })
     })
   })
