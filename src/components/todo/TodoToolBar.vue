@@ -18,7 +18,9 @@
                 clickable v-close-popup
                 @click="selectedWork = work"
               >
-                <q-item-section>{{work.name}}</q-item-section>
+                <q-item-section rows>
+                  {{work.name}}
+                </q-item-section>
               </q-item>
             </q-list>
           </q-menu>
@@ -35,14 +37,14 @@
       </div>
       <q-space />
       <q-btn icon="more_vert" flat round dense>
-        <q-menu dark fit anchor="bottom left" self="top left">
+        <q-menu fit anchor="bottom left" self="top left">
             <q-list style="min-width: 100px">
               <q-item
                 clickable
                 v-close-popup
                 @click="handleNewWorkBtnClicked"
               >
-                <q-item-section>New work</q-item-section>
+                <q-item-section>Work 등록</q-item-section>
               </q-item>
             </q-list>
           </q-menu>
