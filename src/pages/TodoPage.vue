@@ -62,7 +62,6 @@ export default {
   },
   async beforeCreate () {
     const res = await ipcRenderer.invoke('getWork')
-    console.log(res)
 
     if (res.result) {
       if (res.rows.length > 0) {
