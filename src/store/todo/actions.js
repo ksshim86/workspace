@@ -15,11 +15,11 @@ export async function FETCH_WORKS (context) {
 }
 
 export async function SET_WORK (context, work) {
-  const { result } = await ipcRenderer.invoke('createWork', work)
+  const obj = await ipcRenderer.invoke('createWork', work)
 
-  if (result) {
+  if (obj.result) {
     context.commit('SET_WORK', work)
   }
 
-  return result
+  return obj
 }

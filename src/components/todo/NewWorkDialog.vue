@@ -41,9 +41,9 @@ export default {
   },
   methods: {
     async handleNewWorkClicked () {
-      const res = await this.setWork(this.newWork)
+      const { result, message } = await this.setWork(this.newWork)
 
-      if (res) {
+      if (result) {
         this.isOpen = false
 
         this.newWork = {
@@ -52,6 +52,12 @@ export default {
         }
 
         this.notifyCreatedWork()
+      } else {
+        this.$q.dialog({
+          title: 'Failed',
+          message
+        })
+        // !TODO: 추후에 alert dialog는 컴포넌트화 필요
       }
     },
     notifyCreatedWork () {
