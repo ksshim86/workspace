@@ -80,7 +80,18 @@
         </q-item>
       </template>
     </q-select>
-
+    <q-btn icon="more_vert" flat round dense>
+      <q-menu dark fit anchor="bottom left" self="top left">
+          <q-list style="min-width: 100px">
+            <q-item
+              clickable
+              v-close-popup
+            >
+              <q-item-section>New work</q-item-section>
+            </q-item>
+          </q-list>
+        </q-menu>
+    </q-btn>
   </q-toolbar>
 </template>
 
