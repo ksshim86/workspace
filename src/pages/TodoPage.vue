@@ -14,67 +14,47 @@
           <div class="text-h6">Work를 만들고 할 일을 관리하세요</div>
         </q-card-section>
         <q-card-actions vertical>
-          <q-btn outline @click="isNewWork = true">Create new work</q-btn>
+          <q-btn outline @click="handleNewWorkBtnClicked">Create new work</q-btn>
         </q-card-actions>
       </q-card>
     </div>
-    <q-dialog v-model="isNewWork">
-      <q-card class="my-card" :style="`width: 400px;`">
-        <q-card-section class="row items-center q-py-xs">
-          <div class="text-overline">Create new work</div>
-          <q-space />
-          <q-btn icon="close" flat round dense v-close-popup />
-        </q-card-section>
-        <q-separator />
-        <q-card-section >
-          <q-input v-model="newWork.name" label="name" />
-          <q-input v-model="newWork.key" label="key" />
-        </q-card-section>
-        <q-card-section align="right">
-          <q-btn flat label="Close" v-close-popup />
-          <q-btn flat label="Create work"
-           @click="handleNewWorkClicked" :disable="isDisableCreateWorkBtn" />
-        </q-card-section>
-      </q-card>
-    </q-dialog>
+    <new-work-dialog ref="newWorkDialog" />
   </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-import TodoToolBar from 'src/components/TodoToolBar.vue'
-import { ipcRenderer } from 'electron'
-import TodoList from 'src/components/TodoList.vue'
+import { mapActions, mapGetters } from 'vuex'
+import TodoToolBar from 'src/components/todo/TodoToolBar.vue'
+import TodoList from 'src/components/todo/TodoList.vue'
+import NewWorkDialog from 'src/components/todo/NewWorkDialog.vue'
 
 export default {
-  components: { TodoToolBar, TodoList },
+  components: { TodoToolBar, TodoList, NewWorkDialog },
   name: 'TodoPage',
   data () {
     return {
       isWork: false,
-      isNewWork: false,
-      works: [],
-      newWork: {
-        name: '',
-        key: ''
-      }
+      isNewWorkDialog: false
     }
   },
   async beforeCreate () {
-    const res = await ipcRenderer.invoke('getWork')
+    // const res = await ipcRenderer.invoke('getWork')
 
-    if (res.result) {
-      if (res.rows.length > 0) {
-        this.isWork = true
-        this.works = res.rows
-      } else {
-        this.isWork = false
-      }
-    }
+    // if (res.result) {
+    //   if (res.rows.length > 0) {
+    //     this.isWork = true
+    //     this.works = res.rows
+    //   } else {
+    //     this.isWork = false
+    //   }
+    // }
 
     // eslint-disable-next-line no-unused-vars
-    const todoRes = await ipcRenderer.invoke('getTodoList', 16)
+    // const todoRes = await ipcRenderer.invoke('getTodoList', 16)
     // !TODO: todolist 그리는 기능 개발
+  },
+  created () {
+    this.fetchWorks()
   },
   mounted () {
     const { scroll } = this.$refs
@@ -86,6 +66,11 @@ export default {
   watch: {
     selectedWork (work) {
       console.log(work)
+    },
+    works (works) {
+      if (works !== undefined && works.length > 0) {
+        this.isWork = true
+      }
     }
   },
   computed: {
@@ -93,35 +78,17 @@ export default {
       return !(this.newWork.name && this.newWork.key)
     },
     ...mapGetters({
-      selectedWork: 'todo/GET_SELECTED_WORK'
+      selectedWork: 'todo/GET_SELECTED_WORK',
+      works: 'todo/GET_WORKS'
     })
   },
   methods: {
-    async handleNewWorkClicked () {
-      const { result } = await ipcRenderer.invoke('createWork', this.newWork)
-
-      if (result) {
-        this.isNewWork = false
-        this.isWork = true
-
-        this.newWork = {
-          name: '',
-          key: ''
-        }
-
-        this.notifyCreatedWork()
-      }
-
-      // !TODO: work생성 후, work 조회 기능 추가 필요
+    handleNewWorkBtnClicked () {
+      this.$refs.newWorkDialog.isOpen = true
     },
-    notifyCreatedWork () {
-      this.$q.notify({
-        type: 'positive',
-        color: 'light-blue-6',
-        message: 'Created new work',
-        position: 'bottom-right'
-      })
-    }
+    ...mapActions({
+      fetchWorks: 'todo/FETCH_WORKS'
+    })
   }
 }
 </script>
