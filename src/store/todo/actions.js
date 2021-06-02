@@ -23,3 +23,7 @@ export async function SET_WORK (context, work) {
 
   return obj
 }
+
+export function SET_EDIT_WORK_ID (context, id) {
+  context.commit('SET_EDIT_WORK_ID', id)
+}

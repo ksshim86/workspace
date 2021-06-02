@@ -15,7 +15,7 @@
       </q-chip>
       <q-space />
       <q-btn icon="open_in_new" flat round dense />
-      <q-btn icon="more_vert" flat round dense />
+      <q-btn icon="more_horiz" flat round dense />
     </q-card-section>
     <q-separator />
     <q-card-section class="q-py-sm" :style="`height: 150px;`">
