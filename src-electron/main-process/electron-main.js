@@ -243,25 +243,28 @@ ipcMain.handle('getWorks', async () => {
   return obj
 })
 
-ipcMain.handle('getTodoList', async (event, args) => {
+ipcMain.handle('getTodos', async (event, id) => {
   const obj = {
     result: true,
     message: '',
     rows: {}
   }
-  console.log(`args : ${args}`)
 
   const sql = `select
                 no, work_id as workId, title, content, status,
                 start_dt as startDt, due_dt as dueDt, del_yn as delYn
               from
-                todo
-              where
-                work_id = ?
-              and
-                del_yn = 'N'`
+                todo`
+  let condition = 'where del_yn = \'N\''
 
-  const res = await mapper.all(sql, [args])
+  if (typeof id === 'number') {
+    condition = `where
+                  work_id = ?
+                and
+                  del_yn = 'N'`
+  }
+
+  const res = await mapper.all(`${sql} ${condition}`, [id])
 
   if (res.error) {
     console.error(`err : ${res.err.message}`)

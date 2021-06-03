@@ -14,3 +14,7 @@ export function SET_EDIT_WORK_ID (state, id) {
   console.log(`SET_EDIT_WORK_ID: ${id}`)
   state.editWorkId = id
 }
+
+export function SET_TODOS (state, todos) {
+  state.todos = todos
+}

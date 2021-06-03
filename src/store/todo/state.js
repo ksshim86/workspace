@@ -2,6 +2,7 @@ export default function state () {
   return {
     works: [],
     selectedWork: {},
-    editWorkId: null
+    editWorkId: null,
+    todos: []
   }
 }

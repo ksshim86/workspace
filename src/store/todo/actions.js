@@ -8,8 +8,9 @@ export async function FETCH_WORKS (context) {
   const res = await ipcRenderer.invoke('getWorks')
 
   if (res.result) {
-    if (res.rows.length > 0) {
+    if (res.rows !== undefined && res.rows.length > 0) {
       context.commit('SET_WORKS', res.rows)
+      context.dispatch('FETCH_TODOS')
     }
   }
 }
@@ -46,4 +47,14 @@ export async function DELETE_WORK_BY_ID (context, id) {
   }
 
   return obj
+}
+
+export async function FETCH_TODOS (context) {
+  const res = await ipcRenderer.invoke('getTodos', context.state.selectedWork.id)
+
+  if (res.result) {
+    if (res.rows !== undefined && res.rows.length > 0) {
+      context.commit('SET_TODOS', res.rows)
+    }
+  }
 }
