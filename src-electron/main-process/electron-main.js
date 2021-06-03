@@ -111,9 +111,9 @@ ipcMain.handle('isWorkspace', async () => {
     row: {},
     isWorkspace: false
   }
-  const sql = `select 
-                root_path as rootPath 
-              from 
+  const sql = `select
+                root_path as rootPath
+              from
                 system_info`
 
   const { err, row } = await mapper.get(sql)
@@ -193,13 +193,42 @@ ipcMain.handle('editWork', async (event, work) => {
   return obj
 })
 
+ipcMain.handle('deleteWorkById', async (event, id) => {
+  const obj = {
+    result: true,
+    message: '',
+    rows: {}
+  }
+  const sql = 'update work set del_yn = \'Y\' where id = ?'
+
+  try {
+    const err = await mapper.run(sql, [id])
+
+    console.error(err)
+
+    if (err) {
+      obj.result = false
+      obj.message = err.message
+    }
+  } catch (e) {
+    console.error(e)
+  }
+
+  return obj
+})
+
 ipcMain.handle('getWorks', async () => {
   const obj = {
     result: true,
     message: '',
     rows: {}
   }
-  const sql = 'select id, name, key, path, del_yn as delYn from work'
+  const sql = `select
+                id, name, key, path, del_yn as delYn
+              from
+                work
+              where
+                del_yn = 'N'`
 
   const res = await mapper.all(sql, [])
 

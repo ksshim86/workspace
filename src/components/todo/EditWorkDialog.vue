@@ -11,7 +11,7 @@
           <q-input v-model="work.name" label="name" />
         </q-card-section>
         <q-card-section align="right">
-          <q-btn class="text-red" flat label="삭제" v-close-popup />
+          <q-btn class="text-red" flat label="삭제" @click="handleDeleteWorkBtnClicked" />
           <q-btn flat label="수정" @click="handleEditWorkBtnClicked" />
         </q-card-section>
       </q-card>
@@ -50,13 +50,51 @@ export default {
   },
   methods: {
     async handleEditWorkBtnClicked () {
-      const res = await this.setEditWork(this.work)
+      const { result, message } = await this.setEditWork(this.work)
 
-      console.log(res)
+      if (result) {
+        this.isOpen = false
+
+        this.$q.notify({
+          type: 'positive',
+          color: 'light-blue-6',
+          message: '수정이 완료되었습니다',
+          position: 'bottom-right'
+        })
+      } else {
+        console.error(message)
+
+        this.$q.dialog({
+          title: 'Failed',
+          message
+        })
+      }
+    },
+    async handleDeleteWorkBtnClicked () {
+      const { result, message } = await this.deleteWorkById(this.work.id)
+
+      if (result) {
+        this.isOpen = false
+
+        this.$q.notify({
+          type: 'positive',
+          color: 'light-blue-6',
+          message: '삭제가 완료되었습니다',
+          position: 'bottom-right'
+        })
+      } else {
+        console.error(message)
+
+        this.$q.dialog({
+          title: 'Failed',
+          message
+        })
+      }
     },
     ...mapActions({
       setEditWorkId: 'todo/SET_EDIT_WORK_ID',
-      setEditWork: 'todo/SET_EDIT_WORK'
+      setEditWork: 'todo/SET_EDIT_WORK',
+      deleteWorkById: 'todo/DELETE_WORK_BY_ID'
     })
   }
 }

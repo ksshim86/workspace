@@ -37,3 +37,13 @@ export async function SET_EDIT_WORK (context, work) {
 
   return obj
 }
+
+export async function DELETE_WORK_BY_ID (context, id) {
+  const obj = await ipcRenderer.invoke('deleteWorkById', id)
+
+  if (obj.result) {
+    context.dispatch('FETCH_WORKS')
+  }
+
+  return obj
+}
