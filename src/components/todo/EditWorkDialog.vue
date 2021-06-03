@@ -8,11 +8,11 @@
         </q-card-section>
         <q-separator />
         <q-card-section >
-          <q-input />
+          <q-input v-model="work.name" label="name" />
         </q-card-section>
         <q-card-section align="right">
-          <q-btn flat label="Close" v-close-popup />
-          <q-btn flat label="Create work" />
+          <q-btn class="text-red" flat label="삭제" v-close-popup />
+          <q-btn flat label="수정" @click="handleEditWorkBtnClicked" />
         </q-card-section>
       </q-card>
     </q-dialog>
@@ -31,14 +31,15 @@ export default {
   },
   data () {
     return {
-      isOpen: false
+      isOpen: false,
+      work: {}
     }
   },
   watch: {
     isOpen (newVal) {
       if (newVal) {
         this.setEditWorkId(this.id)
-        console.log(this.getWorkById)
+        this.work = JSON.parse(JSON.stringify(this.getWorkById))
       }
     }
   },
@@ -48,8 +49,14 @@ export default {
     })
   },
   methods: {
+    async handleEditWorkBtnClicked () {
+      const res = await this.setEditWork(this.work)
+
+      console.log(res)
+    },
     ...mapActions({
-      setEditWorkId: 'todo/SET_EDIT_WORK_ID'
+      setEditWorkId: 'todo/SET_EDIT_WORK_ID',
+      setEditWork: 'todo/SET_EDIT_WORK'
     })
   }
 }

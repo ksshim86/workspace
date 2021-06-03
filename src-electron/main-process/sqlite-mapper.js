@@ -18,7 +18,7 @@ db.run('create table system_info(root_path text null)', (err) => {
   }
 })
 
-const insert = async (sql, params) => {
+const run = async (sql, params) => {
   const res = await new Promise((resolve, reject) => {
     console.log(reject)
     db.run(sql, params, (err) => {
@@ -30,7 +30,7 @@ const insert = async (sql, params) => {
 }
 
 const get = async (sql, params) => {
-  const res = await new Promise((resolve, reject) => {
+  const res = await new Promise((resolve) => {
     db.get(sql, params, (err, row) => {
       resolve({ err, row })
     })
@@ -61,5 +61,5 @@ const close = () => {
 }
 
 export default {
-  insert, get, close, all
+  run, get, close, all
 }

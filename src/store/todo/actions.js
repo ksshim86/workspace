@@ -5,7 +5,7 @@ export function SET_SELECTED_WORK (context, payload) {
 }
 
 export async function FETCH_WORKS (context) {
-  const res = await ipcRenderer.invoke('getWork')
+  const res = await ipcRenderer.invoke('getWorks')
 
   if (res.result) {
     if (res.rows.length > 0) {
@@ -26,4 +26,14 @@ export async function SET_WORK (context, work) {
 
 export function SET_EDIT_WORK_ID (context, id) {
   context.commit('SET_EDIT_WORK_ID', id)
+}
+
+export async function SET_EDIT_WORK (context, work) {
+  const obj = await ipcRenderer.invoke('editWork', work)
+
+  if (obj.result) {
+    context.dispatch('FETCH_WORKS')
+  }
+
+  return obj
 }

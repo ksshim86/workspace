@@ -87,7 +87,7 @@ ipcMain.on('selectWorkspace', (event) => {
     obj.canceled = result.canceled
 
     if (!result.canceled) {
-      mapper.insert(`insert into system_info (root_path) values ('${result.filePaths}')`)
+      mapper.run(`insert into system_info (root_path) values ('${result.filePaths}')`)
       const workDirPath = path.resolve(result.filePaths[0], `${WORK_DIR}`)
 
       fs.mkdir(workDirPath, { recursive: false }, (err) => {
@@ -146,7 +146,7 @@ ipcMain.handle('createWork', async (event, args) => {
   const params = [work.name, work.key, work.path]
   const sql = 'insert into work (name, key, path) values (?, ?, ?)'
 
-  const err = await mapper.insert(sql, params)
+  const err = await mapper.run(sql, params)
 
   if (err) {
     console.error(`err : ${err.message}`)
@@ -169,14 +169,37 @@ ipcMain.handle('createWork', async (event, args) => {
   return obj
 })
 
-ipcMain.handle('getWork', async () => {
+ipcMain.handle('editWork', async (event, work) => {
   const obj = {
     result: true,
     message: '',
     rows: {}
   }
+  const sql = 'update work set name = ? where id = ?'
 
-  const sql = 'select id, name, name as label, key, path, del_yn as delYn from work'
+  try {
+    const err = await mapper.run(sql, [work.name, work.id])
+
+    console.error(err)
+
+    if (err) {
+      obj.result = false
+      obj.message = err.message
+    }
+  } catch (e) {
+    console.error(e)
+  }
+
+  return obj
+})
+
+ipcMain.handle('getWorks', async () => {
+  const obj = {
+    result: true,
+    message: '',
+    rows: {}
+  }
+  const sql = 'select id, name, key, path, del_yn as delYn from work'
 
   const res = await mapper.all(sql, [])
 
@@ -187,8 +210,6 @@ ipcMain.handle('getWork', async () => {
   }
 
   obj.rows = res.rows
-
-  console.log(22222222222222)
 
   return obj
 })
