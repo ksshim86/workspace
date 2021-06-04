@@ -2,15 +2,15 @@
   <q-card dark class="todo-card q-ma-md" flat style="max-width: 433px;">
     <q-card-section class="row items-center q-py-sm">
       <div class="text-overline">
-        #KLID-{{ id }}
+        #{{ todo.key }}-{{ todo.no }}
       </div>
-      <q-chip dense color="primary" text-color="white">
+      <q-chip v-if="todo.status === 'TODO'" dense color="primary" text-color="white">
         Todo
       </q-chip>
-      <q-chip dense color="orange" text-color="white">
+      <q-chip v-else-if="todo.status === 'PROGRESS'" dense color="orange" text-color="white">
         Progress
       </q-chip>
-      <q-chip icon="o_done" dense color="red" text-color="white">
+      <q-chip v-else-if="todo.status === 'DONE'" icon="o_done" dense color="red" text-color="white">
         Done
       </q-chip>
       <q-space />
@@ -57,10 +57,7 @@
 export default {
   name: 'Todo',
   props: {
-    id: {
-      type: Number,
-      default: 0
-    }
+    todo: {}
   }
 }
 </script>

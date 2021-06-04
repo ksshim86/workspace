@@ -251,7 +251,9 @@ ipcMain.handle('getTodos', async (event, id) => {
   }
 
   const sql = `select
-                no, work_id as workId, title, content, status,
+                no, work_id as workId,
+                (select key from work where id = work_id) key,
+                title, content, status,
                 start_dt as startDt, due_dt as dueDt, del_yn as delYn
               from
                 todo`

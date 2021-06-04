@@ -1,12 +1,16 @@
 <template>
   <div class="row items-start full-width">
-    <div v-for="index in 10" :key="index">
-      <todo :id="index" />
+    <div v-for="todo in todos" :key="todo.id">
+      <todo :todo="todo" />
+    </div>
+    <div v-if="todos.length === 0">
+      todo를 등록하세요.
     </div>
   </div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import Todo from './Todo.vue'
 
 export default {
@@ -14,8 +18,12 @@ export default {
   name: 'TodoList',
   data () {
     return {
-      todos: [{}, {}]
     }
+  },
+  computed: {
+    ...mapGetters({
+      todos: 'todo/GET_TODOS'
+    })
   }
 }
 </script>

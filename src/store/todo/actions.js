@@ -1,7 +1,8 @@
 import { ipcRenderer } from 'electron'
 
-export function SET_SELECTED_WORK (context, payload) {
-  context.commit('SET_SELECTED_WORK', payload)
+export function SET_SELECTED_WORK (context, work) {
+  context.commit('SET_SELECTED_WORK', work)
+  context.dispatch('FETCH_TODOS', work.id)
 }
 
 export async function FETCH_WORKS (context) {
@@ -55,6 +56,8 @@ export async function FETCH_TODOS (context) {
   if (res.result) {
     if (res.rows !== undefined && res.rows.length > 0) {
       context.commit('SET_TODOS', res.rows)
+    } else {
+      context.commit('SET_TODOS', [])
     }
   }
 }

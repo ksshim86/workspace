@@ -13,3 +13,7 @@ export function GET_WORK_BY_ID (state) {
 
   return findWork
 }
+
+export function GET_TODOS (state) {
+  return state.todos
+}

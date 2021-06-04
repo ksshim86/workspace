@@ -37,22 +37,6 @@ export default {
       isNewWorkDialog: false
     }
   },
-  async beforeCreate () {
-    // const res = await ipcRenderer.invoke('getWork')
-
-    // if (res.result) {
-    //   if (res.rows.length > 0) {
-    //     this.isWork = true
-    //     this.works = res.rows
-    //   } else {
-    //     this.isWork = false
-    //   }
-    // }
-
-    // eslint-disable-next-line no-unused-vars
-    // const todoRes = await ipcRenderer.invoke('getTodoList', 16)
-    // !TODO: todolist 그리는 기능 개발
-  },
   created () {
     this.fetchWorks()
   },
