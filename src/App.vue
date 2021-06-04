@@ -61,7 +61,7 @@
   </div>
 </template>
 <script>
-import { ipcRenderer } from 'electron'
+import { mapActions, mapGetters } from 'vuex'
 import { dom } from 'quasar'
 import Bar from './components/Bar'
 
@@ -74,20 +74,25 @@ export default {
     return {
       left: false,
       mini: true,
-      isWorkspace: false,
       contentHeight: 0,
     }
   },
-  async beforeCreate () {
-    const { isWorkspace } = await ipcRenderer.invoke('isWorkspace')
-
-    this.isWorkspace = isWorkspace
-
-    if (this.isWorkspace) {
-      this.$router.push('/todo')
-    } else {
-      this.$router.push('/welcome')
+  async mounted () {
+    this.fetchIsWorkspace()
+  },
+  watch: {
+    isWorkspace (newVal) {
+      if (newVal) {
+        this.$router.push('/todo')
+      } else {
+        this.$router.push('/welcome')
+      }
     }
+  },
+  computed: {
+    ...mapGetters({
+      isWorkspace: 'todo/GET_IS_WORKSPACE'
+    })
   },
   methods: {
     onResize () {
@@ -96,7 +101,10 @@ export default {
 
       this.contentHeight = height - containerTop - 16
       console.log(`${containerTop}, ${height}`)
-    }
+    },
+    ...mapActions({
+      fetchIsWorkspace: 'todo/FETCH_IS_WORKSPACE'
+    })
   }
 }
 </script>

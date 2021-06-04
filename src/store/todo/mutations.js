@@ -1,3 +1,7 @@
+export function FETCH_IS_WORKSPACE (state, isWorkspace) {
+  state.isWorkspace = isWorkspace
+}
+
 export function SET_SELECTED_WORK (state, work) {
   state.selectedWork = work
 }

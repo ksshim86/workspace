@@ -1,5 +1,11 @@
 import { ipcRenderer } from 'electron'
 
+export async function FETCH_IS_WORKSPACE (context) {
+  const { isWorkspace } = await ipcRenderer.invoke('isWorkspace')
+
+  context.commit('FETCH_IS_WORKSPACE', isWorkspace)
+}
+
 export function SET_SELECTED_WORK (context, work) {
   context.commit('SET_SELECTED_WORK', work)
   context.dispatch('FETCH_TODOS', work.id)

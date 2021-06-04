@@ -1,3 +1,7 @@
+export function GET_IS_WORKSPACE (state) {
+  return state.isWorkspace
+}
+
 export function GET_WORKS (state) {
   return state.works
 }

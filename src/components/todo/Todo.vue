@@ -1,5 +1,5 @@
 <template>
-  <q-card dark class="todo-card q-ma-md" flat style="max-width: 433px;">
+  <q-card dark class="todo-card q-ma-md" flat style="min-width: 400px;">
     <q-card-section class="row items-center q-py-sm">
       <div class="text-overline">
         #{{ todo.key }}-{{ todo.no }}
@@ -28,11 +28,17 @@
           @blur="isInputTitleFocus = !isInputTitleFocus"
         />
       </div>
-      <div class="text-caption text-grey">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-        sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-        sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+      <div>
+        <q-input
+          dense borderless :outlined="isInputContentFocus"
+          type="textarea"
+          rows=3
+          input-class="text-white text-caption text-grey"
+          input-style="resize: none; height: 85px;"
+          v-model="form.content"
+          @focus="isInputContentFocus = !isInputContentFocus"
+          @blur="isInputContentFocus = !isInputContentFocus"
+        />
       </div>
     </q-card-section>
 
@@ -72,17 +78,14 @@ export default {
       form: {
         title: ''
       },
-      isInputTitleFocus: false
+      isInputTitleFocus: false,
+      isInputContentFocus: false,
     }
   },
-  created () {
-    this.form.title = this.todo.title
+  mounted () {
+    this.form = this.todo
   },
   methods: {
-    handleInputTitleClicked () {
-      console.log('focus!!')
-      this.isInputTitleFocus = false
-    }
   }
 }
 </script>
