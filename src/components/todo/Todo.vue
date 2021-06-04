@@ -19,7 +19,15 @@
     </q-card-section>
     <q-separator />
     <q-card-section class="q-py-sm" :style="`height: 150px;`">
-      <div class="text-h5 q-my-xs">Title</div>
+      <div class="q-my-xs">
+        <q-input
+          dense borderless :outlined="isInputTitleFocus"
+          input-class="text-white text-h5"
+          v-model="form.title"
+          @focus="isInputTitleFocus = !isInputTitleFocus"
+          @blur="isInputTitleFocus = !isInputTitleFocus"
+        />
+      </div>
       <div class="text-caption text-grey">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit,
         sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
@@ -58,6 +66,23 @@ export default {
   name: 'Todo',
   props: {
     todo: {}
+  },
+  data () {
+    return {
+      form: {
+        title: ''
+      },
+      isInputTitleFocus: false
+    }
+  },
+  created () {
+    this.form.title = this.todo.title
+  },
+  methods: {
+    handleInputTitleClicked () {
+      console.log('focus!!')
+      this.isInputTitleFocus = false
+    }
   }
 }
 </script>
