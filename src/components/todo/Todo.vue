@@ -19,26 +19,9 @@
     </q-card-section>
     <q-separator />
     <q-card-section class="q-py-sm" :style="`height: 150px;`">
-      <div class="q-my-xs">
-        <q-input
-          dense borderless :outlined="isInputTitleFocus"
-          input-class="text-white text-h5"
-          v-model="form.title"
-          @focus="isInputTitleFocus = !isInputTitleFocus"
-          @blur="isInputTitleFocus = !isInputTitleFocus"
-        />
-      </div>
-      <div>
-        <q-input
-          dense borderless :outlined="isInputContentFocus"
-          type="textarea"
-          rows=3
-          input-class="text-white text-caption text-grey"
-          input-style="resize: none; height: 85px;"
-          v-model="form.content"
-          @focus="isInputContentFocus = !isInputContentFocus"
-          @blur="isInputContentFocus = !isInputContentFocus"
-        />
+      <div class="text-h5 q-my-xs">{{ form.title }}</div>
+      <div class="text-caption text-grey">
+        {{ form.content }}
       </div>
     </q-card-section>
 
@@ -59,9 +42,10 @@
     </q-card-actions>
     <q-card-actions align="right" class="q-py-sm">
       <q-btn flat>
-        21.05.24 - 21.05.30
+        {{ form.startDt }} - {{ form.dueDt }}
       </q-btn>
       <q-space />
+      <q-btn flat round icon="folder_open" />
       <q-btn flat round icon="o_attachment" :style="{ transform: 'rotate(135deg)'}" />
     </q-card-actions>
   </q-card>
@@ -83,7 +67,7 @@ export default {
     }
   },
   mounted () {
-    this.form = this.todo
+    this.form = JSON.parse(JSON.stringify(this.todo))
   },
   methods: {
   }

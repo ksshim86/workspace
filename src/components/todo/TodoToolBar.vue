@@ -41,7 +41,7 @@
       <q-space />
       <q-btn icon="menu" flat round dense>
         <q-menu fit anchor="bottom left" self="top left">
-            <q-list style="min-width: 100px">
+            <q-list style="min-width: 150px">
               <q-item
                 clickable
                 v-close-popup
@@ -49,22 +49,31 @@
               >
                 <q-item-section>Work 등록</q-item-section>
               </q-item>
+              <q-item
+                clickable
+                v-close-popup
+                @click="handleNewTodokBtnClicked"
+              >
+                <q-item-section>TODO 등록</q-item-section>
+              </q-item>
             </q-list>
           </q-menu>
       </q-btn>
     </q-toolbar>
     <new-work-dialog ref="newWorkDialog" />
     <edit-work-dialog :id="editWorkId" ref="editWorkDialog" />
+    <new-todo-dialog ref="newTodoDialog" />
   </div>
 </template>
 
 <script>
 import { mapActions, mapGetters } from 'vuex'
 import EditWorkDialog from './EditWorkDialog.vue'
+import NewTodoDialog from './NewTodoDialog.vue'
 import NewWorkDialog from './NewWorkDialog.vue'
 
 export default {
-  components: { NewWorkDialog, EditWorkDialog },
+  components: { NewWorkDialog, EditWorkDialog, NewTodoDialog },
   name: 'TodoToolBar',
   props: {
     works: {
@@ -93,6 +102,9 @@ export default {
     handleEditWorkBtnClicked (id) {
       this.editWorkId = id
       this.$refs.editWorkDialog.isOpen = true
+    },
+    handleNewTodokBtnClicked () {
+      this.$refs.newTodoDialog.isOpen = true
     },
     ...mapActions({
       setSelectedWork: 'todo/SET_SELECTED_WORK'
