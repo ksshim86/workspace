@@ -12,48 +12,49 @@
         @submit="onSubmit"
         class="q-gutter-md"
       >
-        <q-card-section >
-          <q-input
-            v-model="todo.title"
-            dense
-            label="Title"
-            :rules="[ val => val && val.length > 0 || 'Please type something']"
-          />
-          <q-editor v-model="todo.content" min-height="10rem" class="q-mb-md" />
-          <q-file clearable class="q-mb-md" dense
-            v-model="files" label="Pick files" counter>
-            <template v-slot:prepend>
-              <q-icon name="attach_file" />
-            </template>
-          </q-file>
-          <q-select
-            filled
-            dense
-            class="q-mb-md"
-            label="tags"
-            v-model="tags"
-            use-input
-            use-chips
-            multiple
-            input-debounce="0"
-            @new-value="createValue"
-            :options="filterOptions"
-            @filter="filterFn"
-          />
-          <q-input filled v-model="todo.dueDt" :rules="['date']" style="width: 170px;">
-            <template v-slot:append>
-              <q-icon name="event" class="cursor-pointer">
-                <q-popup-proxy ref="qDateProxy" transition-show="scale" transition-hide="scale">
-                  <q-date v-model="todo.dueDt" minimal >
-                    <div class="row items-center justify-end">
-                      <q-btn v-close-popup label="Close" color="primary" flat />
-                    </div>
-                  </q-date>
-                </q-popup-proxy>
-              </q-icon>
-            </template>
-          </q-input>
-        </q-card-section>
+        <q-scroll-area :style="`overflow: hidden; height: 500px;`">
+          <q-card-section>
+            <q-input
+              v-model="todo.title"
+              dense
+              label="Title"
+              :rules="[ val => val && val.length > 0 || 'Please type something']"
+            />
+            <q-editor v-model="todo.content" min-height="10rem" class="q-mb-md" />
+            <q-file clearable class="q-mb-md" dense use-chips multiple
+              v-model="files" label="Pick files" counter>
+              <template v-slot:prepend>
+                <q-icon name="attach_file" />
+              </template>
+            </q-file>
+            <q-select
+              dense
+              class="q-mb-md"
+              label="tags"
+              v-model="tags"
+              use-input
+              use-chips
+              multiple
+              input-debounce="0"
+              @new-value="createValue"
+              :options="filterOptions"
+              @filter="filterFn"
+            />
+            <q-input v-model="rangeDt" style="width: 230px;" label="due date">
+              <template v-slot:append>
+                <q-icon name="event" class="cursor-pointer">
+                  <q-popup-proxy ref="qDateProxy" transition-show="scale" transition-hide="scale">
+                    <q-date v-model="selectedRangeDt" minimal range>
+                      <div class="row items-center justify-end">
+                        <q-btn v-close-popup label="Close" color="primary" flat />
+                      </div>
+                    </q-date>
+                  </q-popup-proxy>
+                </q-icon>
+              </template>
+            </q-input>
+          </q-card-section>
+        </q-scroll-area>
         <q-card-section align="right">
           <q-btn flat label="닫기" v-close-popup />
           <q-btn flat type="submit" label="등록" />
@@ -84,10 +85,22 @@ export default {
       },
       files: null,
       tags: null,
-      filterOptions: stringOptions
+      filterOptions: stringOptions,
+      selectedRangeDt: { from: '', to: '' }
     }
   },
   computed: {
+    rangeDt () {
+      if (this.selectedRangeDt.from === undefined) {
+        return this.selectedRangeDt
+      }
+
+      if (this.selectedRangeDt.from === '' || this.selectedRangeDt.to === '') {
+        return ''
+      }
+
+      return `${this.selectedRangeDt.from} ~ ${this.selectedRangeDt.to}`
+    }
   },
   methods: {
     filterFn (val, update) {
