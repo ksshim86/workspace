@@ -40,19 +40,29 @@
               :options="filterOptions"
               @filter="filterFn"
             />
-            <q-input v-model="rangeDt" style="width: 230px;" label="due date">
-              <template v-slot:append>
-                <q-icon name="event" class="cursor-pointer">
-                  <q-popup-proxy ref="qDateProxy" transition-show="scale" transition-hide="scale">
-                    <q-date v-model="selectedRangeDt" minimal range>
-                      <div class="row items-center justify-end">
-                        <q-btn v-close-popup label="Close" color="primary" flat />
-                      </div>
-                    </q-date>
-                  </q-popup-proxy>
-                </q-icon>
-              </template>
-            </q-input>
+            <div class="q-gutter-md row items-start">
+              <q-input v-model="rangeDt" style="width: 230px;" label="due date">
+                <template v-slot:append>
+                  <q-icon name="event" class="cursor-pointer">
+                    <q-popup-proxy ref="qDateProxy" transition-show="scale" transition-hide="scale">
+                      <q-date v-model="selectedRangeDt" minimal range>
+                        <div class="row items-center justify-end">
+                          <q-btn v-close-popup label="Close" color="primary" flat />
+                        </div>
+                      </q-date>
+                    </q-popup-proxy>
+                  </q-icon>
+                </template>
+              </q-input>
+              <q-btn flat round icon="o_attachment" :style="{ transform: 'rotate(135deg)'}" />
+              <q-dialog v-model="isAttachment">
+                  <q-uploader
+                    style="max-width: 300px"
+                    multiple
+                    :factory="factoryFn"
+                  />
+              </q-dialog>
+            </div>
           </q-card-section>
         </q-scroll-area>
         <q-card-section align="right">
@@ -74,6 +84,7 @@ export default {
   data () {
     return {
       isOpen: true,
+      isAttachment: true,
       todo: {
         no: 0,
         workId: 0,
@@ -103,6 +114,9 @@ export default {
     }
   },
   methods: {
+    factoryFn (files) {
+      console.log(files)
+    },
     filterFn (val, update) {
       update(() => {
         if (val === '') {
