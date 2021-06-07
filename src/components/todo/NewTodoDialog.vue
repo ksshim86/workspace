@@ -21,12 +21,13 @@
               :rules="[ val => val && val.length > 0 || 'Please type something']"
             />
             <q-editor v-model="todo.content" min-height="10rem" class="q-mb-md" />
-            <q-file clearable class="q-mb-md" dense use-chips multiple
+            <!-- <q-file clearable class="q-mb-md"
+              dense use-chips multiple append
               v-model="files" label="Pick files" counter>
               <template v-slot:prepend>
                 <q-icon name="attach_file" />
               </template>
-            </q-file>
+            </q-file> -->
             <q-select
               dense
               class="q-mb-md"
@@ -56,11 +57,12 @@
               </q-input>
               <q-btn flat round icon="o_attachment" :style="{ transform: 'rotate(135deg)'}" />
               <q-dialog v-model="isAttachment">
-                  <q-uploader
-                    style="max-width: 300px"
-                    multiple
-                    :factory="factoryFn"
-                  />
+                <q-uploader
+                  style="max-width: 300px"
+                  multiple
+                  no-thumbnails
+                  url="D:\Study\workspace-test-folder"
+                />
               </q-dialog>
             </div>
           </q-card-section>
@@ -116,6 +118,7 @@ export default {
   methods: {
     factoryFn (files) {
       console.log(files)
+      return false
     },
     filterFn (val, update) {
       update(() => {
