@@ -21,13 +21,6 @@
               :rules="[ val => val && val.length > 0 || 'Please type something']"
             />
             <q-editor v-model="todo.content" min-height="10rem" class="q-mb-md" />
-            <!-- <q-file clearable class="q-mb-md"
-              dense use-chips multiple append
-              v-model="files" label="Pick files" counter>
-              <template v-slot:prepend>
-                <q-icon name="attach_file" />
-              </template>
-            </q-file> -->
             <q-select
               dense
               class="q-mb-md"
@@ -41,7 +34,7 @@
               :options="filterOptions"
               @filter="filterFn"
             />
-            <div class="q-gutter-md row items-start">
+            <div class="q-mb-md row items-start">
               <q-input v-model="rangeDt" style="width: 230px;" label="due date">
                 <template v-slot:append>
                   <q-icon name="event" class="cursor-pointer">
@@ -55,16 +48,14 @@
                   </q-icon>
                 </template>
               </q-input>
-              <q-btn flat round icon="o_attachment" :style="{ transform: 'rotate(135deg)'}" />
-              <q-dialog v-model="isAttachment">
-                <q-uploader
-                  style="max-width: 300px"
-                  multiple
-                  no-thumbnails
-                  url="D:\Study\workspace-test-folder"
-                />
-              </q-dialog>
             </div>
+            <q-file clearable class="q-mb-md"
+              dense use-chips multiple append
+              v-model="files" label="Pick files" counter>
+              <template v-slot:prepend>
+                <q-icon name="attach_file" />
+              </template>
+            </q-file>
           </q-card-section>
         </q-scroll-area>
         <q-card-section align="right">

@@ -33,8 +33,8 @@ function createWindow () {
   mainWindow = new BrowserWindow({
     width: 1000,
     height: 600,
-    minWidth: 490,
-    minHeight: 360,
+    minWidth: 500,
+    minHeight: 740,
     titleBarStyle: 'customButtonsOnHover',
     frame: false,
     // transparent: true,
