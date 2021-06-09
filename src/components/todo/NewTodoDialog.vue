@@ -48,14 +48,16 @@
                   </q-icon>
                 </template>
               </q-input>
+              <q-space />
+              <q-btn round flat icon="folder" @click="handleOpenDirectoryBtnClicked" />
             </div>
-            <q-file clearable class="q-mb-md"
+            <!-- <q-file clearable class="q-mb-md"
               dense use-chips multiple append
               v-model="files" label="Pick files" counter>
               <template v-slot:prepend>
                 <q-icon name="attach_file" />
               </template>
-            </q-file>
+            </q-file> -->
           </q-card-section>
         </q-scroll-area>
         <q-card-section align="right">
@@ -68,6 +70,8 @@
 </template>
 
 <script>
+import { ipcRenderer } from 'electron'
+
 const stringOptions = [
   'Google', 'Facebook', 'Twitter', 'Apple', 'Oracle'
 ]
@@ -107,6 +111,11 @@ export default {
     }
   },
   methods: {
+    async handleOpenDirectoryBtnClicked () {
+      const res = await ipcRenderer.invoke('openDirectoryByTodo')
+
+      console.log(res)
+    },
     factoryFn (files) {
       console.log(files)
       return false

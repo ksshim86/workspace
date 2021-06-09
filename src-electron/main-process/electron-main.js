@@ -1,5 +1,5 @@
 import {
-  app, BrowserWindow, nativeTheme, ipcMain, dialog
+  app, BrowserWindow, nativeTheme, ipcMain, dialog, shell
 } from 'electron'
 import path from 'path'
 import fs from 'fs'
@@ -277,4 +277,11 @@ ipcMain.handle('getTodos', async (event, id) => {
   obj.rows = res.rows
 
   return obj
+})
+
+ipcMain.handle('openDirectoryByTodo', async (event, id) => {
+  const res = shell.showItemInFolder('C:\\Work\\workspace-test-folder\\work\\JS\\')
+  console.log(res)
+
+  event.returnValue = ''
 })
