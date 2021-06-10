@@ -61,7 +61,19 @@ export async function FETCH_TODOS (context) {
 
   if (res.result) {
     if (res.rows !== undefined && res.rows.length > 0) {
-      context.commit('SET_TODOS', res.rows)
+      const todos = res.rows
+
+      todos.forEach(async (todo) => {
+        const tagRes = await ipcRenderer.invoke('getTagsByTodoId', { workId: todo.workId, todoNo: todo.no })
+
+        if (tagRes.result) {
+          if (tagRes.rows !== undefined && tagRes.rows.length > 0) {
+            todo.tags = tagRes.rows
+          }
+        }
+      })
+
+      context.commit('SET_TODOS', todos)
     } else {
       context.commit('SET_TODOS', [])
     }

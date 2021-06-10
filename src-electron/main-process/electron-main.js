@@ -279,7 +279,42 @@ ipcMain.handle('getTodos', async (event, id) => {
   return obj
 })
 
-ipcMain.handle('openDirectoryByTodo', async (event, id) => {
+ipcMain.handle('getTagsByTodoId', async (event, params) => {
+  const obj = {
+    result: true,
+    message: '',
+    rows: {}
+  }
+
+  const sql = `select
+                id, name
+              from
+                tag
+              where id in (
+                select
+                  tag_id
+                from
+                  tag_todo_map
+                where
+                  work_id = ?
+                and
+                  todo_no = ?
+              )`
+
+  const res = await mapper.all(sql, [params.workId, params.todoNo])
+
+  if (res.error) {
+    console.error(`err : ${res.err.message}`)
+    obj.result = false
+    obj.message = res.err.message
+  }
+
+  obj.rows = res.rows
+
+  return obj
+})
+
+ipcMain.handle('openDirectoryByTodo', async (event) => {
   const res = shell.showItemInFolder('C:\\Work\\workspace-test-folder\\work\\JS\\')
   console.log(res)
 

@@ -40,6 +40,8 @@ const get = async (sql, params) => {
 }
 
 const all = async (sql, params) => {
+  console.log(sql)
+  console.log(params)
   const res = await new Promise((resolve, reject) => {
     console.log(reject)
     db.all(sql, params, (err, rows) => {
