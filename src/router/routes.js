@@ -8,6 +8,7 @@ const routes = [
     // ]
   },
   { path: '/welcome', component: () => import('pages/Welcome.vue') },
+  { path: '/dashboard', component: () => import('pages/DashBoard.vue') },
   { path: '/todo', component: () => import('pages/TodoPage.vue') },
   // Always leave this as last one,
   // but you can also remove it
