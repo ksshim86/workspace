@@ -1,5 +1,5 @@
 <template>
-  <div>This is Wiki</div>
+  <div class="page">This is Wiki</div>
 </template>
 
 <script>
@@ -8,5 +8,9 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
+  .page {
+    background-color: #36393F;
+    height: -webkit-fill-available;
+  }
 </style>
