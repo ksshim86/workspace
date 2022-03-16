@@ -1,63 +1,44 @@
 <template>
-  <q-drawer v-if="isWorkspace" show-if-above v-model="left" side="left"
-    bordered :width="200" :breakpoint="400" :mini="mini" dark>
-    <!-- drawer content -->
-    <q-scroll-area class="fit" :style="`overflow: hidden;`">
-      <q-list padding>
-        <q-item active clickable v-ripple @click="handleLeftMenuClicked(url.dashboard)">
-          <q-item-section avatar>
-            <q-icon name="dashboard"></q-icon>
-          </q-item-section>
-          <q-tooltip content-class="bg-indigo text-white"
-            anchor="center right" self="center left" :offset="[10, 10]">
-            <strong>Dashboard</strong>
-          </q-tooltip>
-        </q-item>
-
-        <q-item clickable v-ripple>
-          <q-item-section avatar>
-            <q-icon name="fab fa-wikipedia-w"></q-icon>
-          </q-item-section>
-
-          <q-item-section>
-            Star
-          </q-item-section>
-        </q-item>
-
-        <!-- <q-item clickable v-ripple>
-          <q-item-section avatar>
-            <q-icon name="send"></q-icon>
-          </q-item-section>
-
-          <q-item-section>
-            Send
-          </q-item-section>
-        </q-item>
-        <q-item clickable v-ripple>
-          <q-item-section avatar>
-            <q-icon name="send"></q-icon>
-          </q-item-section>
-
-          <q-item-section>
-            Send
-          </q-item-section>
-        </q-item>
-        <q-item clickable v-ripple>
-          <q-item-section avatar>
-            <q-icon name="inbox"></q-icon>
-          </q-item-section>
-
-          <q-item-section>
-            Inbox
-          </q-item-section>
-        </q-item> -->
-      </q-list>
-    </q-scroll-area>
-  </q-drawer>
+  <div>
+    <q-drawer v-if="isWorkspace" show-if-above v-model="left" side="left"
+      bordered :width="200" :breakpoint="400" :mini="mini" dark>
+      <!-- drawer content -->
+      <q-scroll-area class="fit" :style="`overflow: hidden;`">
+        <q-list padding>
+          <div @click="handleLeftMenuClicked(menu[0])">
+            <left-menu-item
+              :active="menu[0].isActive"
+              name="Dashboard"
+              icon-name="dashboard"
+            />
+          </div>
+          <div @click="handleLeftMenuClicked(menu[1])">
+            <left-menu-item
+              :active="menu[1].isActive"
+              name="Wiki"
+              icon-name="fab fa-wikipedia-w"
+            />
+          </div>
+          <div @click="handleNewProjectDialogOpenClicked">
+            <left-menu-item
+              :active="false"
+              name="Add Project"
+              icon-name="fas fa-plus"
+            />
+          </div>
+        </q-list>
+      </q-scroll-area>
+    </q-drawer>
+    <new-project-dialog ref="newProjectDialog" />
+  </div>
 </template>
 
 <script>
+import LeftMenuItem from './LeftMenuItem.vue'
+import NewProjectDialog from './project/NewProjectDialog.vue'
+
 export default {
+  components: { LeftMenuItem, NewProjectDialog },
   name: 'LeftMenu',
   props: {
     isWorkspace: String,
@@ -66,18 +47,42 @@ export default {
     return {
       left: false,
       mini: true,
-      url: {
-        dashboard: '/dashboard',
-        todo: '/todo',
-      }
+      menu: [
+        {
+          name: 'dashboard',
+          path: '/dashboard',
+          isActive: true,
+        },
+        {
+          name: 'wiki',
+          path: '/wiki',
+          isActive: false,
+        },
+        {
+          name: 'todo',
+          path: '/todo',
+          isActive: false,
+        }
+      ],
     }
   },
   methods: {
-    handleLeftMenuClicked (url) {
-      if (this.$route.path !== url) {
-        this.$router.push(url)
+    handleLeftMenuClicked (param) {
+      this.menu.forEach((el) => {
+        if (el.name === param.name) {
+          el.isActive = true
+        } else {
+          el.isActive = false
+        }
+      })
+
+      if (this.$route.path !== param.path) {
+        this.$router.push(param.path)
       }
-    }
+    },
+    handleNewProjectDialogOpenClicked () {
+      this.$refs.newProjectDialog.isOpen = true
+    },
   }
 }
 </script>
