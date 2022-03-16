@@ -4,19 +4,19 @@
     <!-- drawer content -->
     <q-scroll-area class="fit" :style="`overflow: hidden;`">
       <q-list padding>
-        <q-item active clickable v-ripple>
+        <q-item active clickable v-ripple @click="handleLeftMenuClicked(url.dashboard)">
           <q-item-section avatar>
             <q-icon name="dashboard"></q-icon>
           </q-item-section>
-          <q-tooltip class="bg-red text-black"
+          <q-tooltip content-class="bg-indigo text-white"
             anchor="center right" self="center left" :offset="[10, 10]">
             <strong>Dashboard</strong>
           </q-tooltip>
         </q-item>
 
-        <!-- <q-item active clickable v-ripple>
+        <q-item clickable v-ripple>
           <q-item-section avatar>
-            <q-icon name="star"></q-icon>
+            <q-icon name="fab fa-wikipedia-w"></q-icon>
           </q-item-section>
 
           <q-item-section>
@@ -24,7 +24,7 @@
           </q-item-section>
         </q-item>
 
-        <q-item clickable v-ripple>
+        <!-- <q-item clickable v-ripple>
           <q-item-section avatar>
             <q-icon name="send"></q-icon>
           </q-item-section>
@@ -60,12 +60,23 @@
 export default {
   name: 'LeftMenu',
   props: {
-    isWorkspace: Boolean,
+    isWorkspace: String,
   },
   data () {
     return {
       left: false,
       mini: true,
+      url: {
+        dashboard: '/dashboard',
+        todo: '/todo',
+      }
+    }
+  },
+  methods: {
+    handleLeftMenuClicked (url) {
+      if (this.$route.path !== url) {
+        this.$router.push(url)
+      }
     }
   }
 }
