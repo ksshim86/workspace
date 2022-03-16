@@ -12,9 +12,62 @@ const db = new sqlite.Database(dbPath, sqlite.OPEN_READWRITE | sqlite.OPEN_CREAT
   }
 })
 
-db.run('create table system_info(root_path text null)', (err) => {
+const query = {
+  createTable: {
+    systemInfo: `
+      CREATE TABLE IF NOT EXISTS "system_info" (
+        ROOT_PATH TEXT NULL,
+        WORK_PATH TEXT NULL,
+        TODO_PATH TEXT NULL
+      )
+    `,
+    work: `
+      CREATE TABLE IF NOT EXISTS "work" (
+        "id" INTEGER NOT NULL UNIQUE,
+        "name" TEXT NOT NULL,
+        "key" TEXT NOT NULL,
+        "path" TEXT NOT NULL,
+        "del_yn" TEXT NOT NULL DEFAULT 'N',
+        PRIMARY KEY("id" AUTOINCREMENT)
+      )
+    `,
+    todo: `
+      CREATE TABLE IF NOT EXISTS "todo" (
+        "no" INTEGER NOT NULL UNIQUE,
+        "work_id" INTEGER NOT NULL,
+        "title" TEXT NOT NULL,
+        "content" TEXT,
+        "status" TEXT NOT NULL,
+        "start_dt" TEXT,
+        "due_dt" TEXT,
+        "file_id" TEXT,
+        "del_yn" TEXT NOT NULL DEFAULT 'N',
+        PRIMARY KEY("no"),
+        FOREIGN KEY("work_id") REFERENCES "work"("id")
+      )
+    `
+  }
+}
+
+db.run(query.createTable.systemInfo, (err) => {
   if (err) {
     console.error(`err : ${err.message}`)
+  } else {
+    console.log('create table system_info')
+  }
+})
+db.run(query.createTable.work, (err) => {
+  if (err) {
+    console.error(`err : ${err.message}`)
+  } else {
+    console.log('create table work')
+  }
+})
+db.run(query.createTable.todo, (err) => {
+  if (err) {
+    console.error(`err : ${err.message}`)
+  } else {
+    console.log('create table todo')
   }
 })
 

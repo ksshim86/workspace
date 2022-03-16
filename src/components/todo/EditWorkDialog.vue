@@ -55,6 +55,8 @@ export default {
       if (result) {
         this.isOpen = false
 
+        this.work = JSON.parse(JSON.stringify(this.getWorkById))
+
         this.$q.notify({
           type: 'positive',
           color: 'light-blue-6',

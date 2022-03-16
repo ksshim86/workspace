@@ -2,7 +2,6 @@ import { ipcRenderer } from 'electron'
 
 export async function FETCH_IS_WORKSPACE (context) {
   const { isWorkspace } = await ipcRenderer.invoke('isWorkspace')
-
   context.commit('FETCH_IS_WORKSPACE', isWorkspace)
 }
 
@@ -12,7 +11,7 @@ export function SET_SELECTED_WORK (context, work) {
 }
 
 export async function FETCH_WORKS (context) {
-  const res = await ipcRenderer.invoke('getWorks')
+  const res = await ipcRenderer.invoke('selectWorks')
 
   if (res.result) {
     if (res.rows !== undefined && res.rows.length > 0) {
@@ -23,7 +22,7 @@ export async function FETCH_WORKS (context) {
 }
 
 export async function SET_WORK (context, work) {
-  const obj = await ipcRenderer.invoke('createWork', work)
+  const obj = await ipcRenderer.invoke('insertWork', work)
 
   if (obj.result) {
     context.commit('SET_WORK', work)
@@ -57,23 +56,11 @@ export async function DELETE_WORK_BY_ID (context, id) {
 }
 
 export async function FETCH_TODOS (context) {
-  const res = await ipcRenderer.invoke('getTodos', context.state.selectedWork.id)
+  const res = await ipcRenderer.invoke('selectTodos', context.state.selectedWork.id)
 
   if (res.result) {
     if (res.rows !== undefined && res.rows.length > 0) {
-      const todos = res.rows
-
-      todos.forEach(async (todo) => {
-        const tagRes = await ipcRenderer.invoke('getTagsByTodoId', { workId: todo.workId, todoNo: todo.no })
-
-        if (tagRes.result) {
-          if (tagRes.rows !== undefined && tagRes.rows.length > 0) {
-            todo.tags = tagRes.rows
-          }
-        }
-      })
-
-      context.commit('SET_TODOS', todos)
+      context.commit('SET_TODOS', res.rows)
     } else {
       context.commit('SET_TODOS', [])
     }

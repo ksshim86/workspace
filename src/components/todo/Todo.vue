@@ -45,13 +45,15 @@
         {{ form.startDt }} - {{ form.dueDt }}
       </q-btn>
       <q-space />
-      <q-btn flat round icon="folder_open" />
+      <q-btn flat round icon="folder_open" @click="handleOpenDirectoryBtnClicked()" />
       <q-btn flat round icon="o_attachment" :style="{ transform: 'rotate(135deg)'}" />
     </q-card-actions>
   </q-card>
 </template>
 
 <script>
+import { ipcRenderer } from 'electron'
+
 export default {
   name: 'Todo',
   props: {
@@ -70,6 +72,11 @@ export default {
     this.form = JSON.parse(JSON.stringify(this.todo))
   },
   methods: {
+    async handleOpenDirectoryBtnClicked () {
+      const res = await ipcRenderer.invoke('openDirectoryByTodo')
+
+      console.log(res)
+    }
   }
 }
 </script>

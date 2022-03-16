@@ -72,7 +72,7 @@ export default {
   name: 'NewTodoDialog',
   data () {
     return {
-      isOpen: true,
+      isOpen: false,
       isAttachment: true,
       todo: {
         no: 0,

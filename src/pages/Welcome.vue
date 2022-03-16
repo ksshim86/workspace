@@ -17,7 +17,7 @@ export default {
   name: 'Welcome',
   methods: {
     handleSelectWorkspaceBtnClicked () {
-      const arg = ipcRenderer.sendSync('selectWorkspace', 'ping')
+      const arg = ipcRenderer.sendSync('insertSystemInfo')
 
       if (arg.result && !arg.canceled) {
         this.$router.push('/')

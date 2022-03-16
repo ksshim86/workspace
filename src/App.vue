@@ -49,6 +49,348 @@
                 Send
               </q-item-section>
             </q-item>
+            <q-item clickable v-ripple>
+              <q-item-section avatar>
+                <q-icon name="inbox"></q-icon>
+              </q-item-section>
+
+              <q-item-section>
+                Inbox
+              </q-item-section>
+            </q-item>
+
+            <q-item active clickable v-ripple>
+              <q-item-section avatar>
+                <q-icon name="star"></q-icon>
+              </q-item-section>
+
+              <q-item-section>
+                Star
+              </q-item-section>
+            </q-item>
+
+            <q-item clickable v-ripple>
+              <q-item-section avatar>
+                <q-icon name="send"></q-icon>
+              </q-item-section>
+
+              <q-item-section>
+                Send
+              </q-item-section>
+            </q-item>
+            <q-item clickable v-ripple>
+              <q-item-section avatar>
+                <q-icon name="send"></q-icon>
+              </q-item-section>
+
+              <q-item-section>
+                Send
+              </q-item-section>
+            </q-item>
+            <q-item clickable v-ripple>
+              <q-item-section avatar>
+                <q-icon name="inbox"></q-icon>
+              </q-item-section>
+
+              <q-item-section>
+                Inbox
+              </q-item-section>
+            </q-item>
+
+            <q-item active clickable v-ripple>
+              <q-item-section avatar>
+                <q-icon name="star"></q-icon>
+              </q-item-section>
+
+              <q-item-section>
+                Star
+              </q-item-section>
+            </q-item>
+
+            <q-item clickable v-ripple>
+              <q-item-section avatar>
+                <q-icon name="send"></q-icon>
+              </q-item-section>
+
+              <q-item-section>
+                Send
+              </q-item-section>
+            </q-item>
+            <q-item clickable v-ripple>
+              <q-item-section avatar>
+                <q-icon name="send"></q-icon>
+              </q-item-section>
+
+              <q-item-section>
+                Send
+              </q-item-section>
+            </q-item>
+            <q-item clickable v-ripple>
+              <q-item-section avatar>
+                <q-icon name="inbox"></q-icon>
+              </q-item-section>
+
+              <q-item-section>
+                Inbox
+              </q-item-section>
+            </q-item>
+
+            <q-item active clickable v-ripple>
+              <q-item-section avatar>
+                <q-icon name="star"></q-icon>
+              </q-item-section>
+
+              <q-item-section>
+                Star
+              </q-item-section>
+            </q-item>
+
+            <q-item clickable v-ripple>
+              <q-item-section avatar>
+                <q-icon name="send"></q-icon>
+              </q-item-section>
+
+              <q-item-section>
+                Send
+              </q-item-section>
+            </q-item>
+            <q-item clickable v-ripple>
+              <q-item-section avatar>
+                <q-icon name="send"></q-icon>
+              </q-item-section>
+
+              <q-item-section>
+                Send
+              </q-item-section>
+            </q-item>
+            <q-item clickable v-ripple>
+              <q-item-section avatar>
+                <q-icon name="inbox"></q-icon>
+              </q-item-section>
+
+              <q-item-section>
+                Inbox
+              </q-item-section>
+            </q-item>
+
+            <q-item active clickable v-ripple>
+              <q-item-section avatar>
+                <q-icon name="star"></q-icon>
+              </q-item-section>
+
+              <q-item-section>
+                Star
+              </q-item-section>
+            </q-item>
+
+            <q-item clickable v-ripple>
+              <q-item-section avatar>
+                <q-icon name="send"></q-icon>
+              </q-item-section>
+
+              <q-item-section>
+                Send
+              </q-item-section>
+            </q-item>
+            <q-item clickable v-ripple>
+              <q-item-section avatar>
+                <q-icon name="send"></q-icon>
+              </q-item-section>
+
+              <q-item-section>
+                Send
+              </q-item-section>
+            </q-item>
+            <q-item clickable v-ripple>
+              <q-item-section avatar>
+                <q-icon name="inbox"></q-icon>
+              </q-item-section>
+
+              <q-item-section>
+                Inbox
+              </q-item-section>
+            </q-item>
+
+            <q-item active clickable v-ripple>
+              <q-item-section avatar>
+                <q-icon name="star"></q-icon>
+              </q-item-section>
+
+              <q-item-section>
+                Star
+              </q-item-section>
+            </q-item>
+
+            <q-item clickable v-ripple>
+              <q-item-section avatar>
+                <q-icon name="send"></q-icon>
+              </q-item-section>
+
+              <q-item-section>
+                Send
+              </q-item-section>
+            </q-item>
+            <q-item clickable v-ripple>
+              <q-item-section avatar>
+                <q-icon name="send"></q-icon>
+              </q-item-section>
+
+              <q-item-section>
+                Send
+              </q-item-section>
+            </q-item>
+            <q-item clickable v-ripple>
+              <q-item-section avatar>
+                <q-icon name="inbox"></q-icon>
+              </q-item-section>
+
+              <q-item-section>
+                Inbox
+              </q-item-section>
+            </q-item>
+
+            <q-item active clickable v-ripple>
+              <q-item-section avatar>
+                <q-icon name="star"></q-icon>
+              </q-item-section>
+
+              <q-item-section>
+                Star
+              </q-item-section>
+            </q-item>
+
+            <q-item clickable v-ripple>
+              <q-item-section avatar>
+                <q-icon name="send"></q-icon>
+              </q-item-section>
+
+              <q-item-section>
+                Send
+              </q-item-section>
+            </q-item>
+            <q-item clickable v-ripple>
+              <q-item-section avatar>
+                <q-icon name="send"></q-icon>
+              </q-item-section>
+
+              <q-item-section>
+                Send
+              </q-item-section>
+            </q-item>
+            <q-item clickable v-ripple>
+              <q-item-section avatar>
+                <q-icon name="inbox"></q-icon>
+              </q-item-section>
+
+              <q-item-section>
+                Inbox
+              </q-item-section>
+            </q-item>
+
+            <q-item active clickable v-ripple>
+              <q-item-section avatar>
+                <q-icon name="star"></q-icon>
+              </q-item-section>
+
+              <q-item-section>
+                Star
+              </q-item-section>
+            </q-item>
+
+            <q-item clickable v-ripple>
+              <q-item-section avatar>
+                <q-icon name="send"></q-icon>
+              </q-item-section>
+
+              <q-item-section>
+                Send
+              </q-item-section>
+            </q-item>
+            <q-item clickable v-ripple>
+              <q-item-section avatar>
+                <q-icon name="send"></q-icon>
+              </q-item-section>
+
+              <q-item-section>
+                Send
+              </q-item-section>
+            </q-item>
+            <q-item clickable v-ripple>
+              <q-item-section avatar>
+                <q-icon name="inbox"></q-icon>
+              </q-item-section>
+
+              <q-item-section>
+                Inbox
+              </q-item-section>
+            </q-item>
+
+            <q-item active clickable v-ripple>
+              <q-item-section avatar>
+                <q-icon name="star"></q-icon>
+              </q-item-section>
+
+              <q-item-section>
+                Star
+              </q-item-section>
+            </q-item>
+
+            <q-item clickable v-ripple>
+              <q-item-section avatar>
+                <q-icon name="send"></q-icon>
+              </q-item-section>
+
+              <q-item-section>
+                Send
+              </q-item-section>
+            </q-item>
+            <q-item clickable v-ripple>
+              <q-item-section avatar>
+                <q-icon name="send"></q-icon>
+              </q-item-section>
+
+              <q-item-section>
+                Send
+              </q-item-section>
+            </q-item>
+            <q-item clickable v-ripple>
+              <q-item-section avatar>
+                <q-icon name="inbox"></q-icon>
+              </q-item-section>
+
+              <q-item-section>
+                Inbox
+              </q-item-section>
+            </q-item>
+
+            <q-item active clickable v-ripple>
+              <q-item-section avatar>
+                <q-icon name="star"></q-icon>
+              </q-item-section>
+
+              <q-item-section>
+                Star
+              </q-item-section>
+            </q-item>
+
+            <q-item clickable v-ripple>
+              <q-item-section avatar>
+                <q-icon name="send"></q-icon>
+              </q-item-section>
+
+              <q-item-section>
+                Send
+              </q-item-section>
+            </q-item>
+            <q-item clickable v-ripple>
+              <q-item-section avatar>
+                <q-icon name="send"></q-icon>
+              </q-item-section>
+
+              <q-item-section>
+                Send
+              </q-item-section>
+            </q-item>
           </q-list>
         </q-scroll-area>
       </q-drawer>
@@ -77,8 +419,8 @@ export default {
       contentHeight: 0,
     }
   },
-  async mounted () {
-    this.fetchIsWorkspace()
+  async created () {
+    await this.fetchIsWorkspace()
   },
   watch: {
     isWorkspace (newVal) {
@@ -100,7 +442,6 @@ export default {
       const height = this.$refs.container.$el.clientHeight
 
       this.contentHeight = height - containerTop - 16
-      console.log(`${containerTop}, ${height}`)
     },
     ...mapActions({
       fetchIsWorkspace: 'todo/FETCH_IS_WORKSPACE'

@@ -8,7 +8,7 @@
   "scripts": {
     "lint": "eslint --ext .js,.vue ./",
     "test": "echo \"No test specified\" && exit 0",
-    "dev": "quasar dev -m electron",
+    "dev": "quasar dev -m electron --inspector=5858",
     "postinstall": "electron-builder install-app-deps",
     "build": "quasar build -m electron"
   },
