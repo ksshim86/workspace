@@ -3,8 +3,7 @@ import path from 'path'
 
 class AppDao {
   constructor () {
-    const dbFilePath = path.resolve(process.resourcesPath, 'workspace.db')
-
+    const dbFilePath = path.resolve('./db/', 'workspace.sqlite3')
     this.db = new sqlite.Database(
       dbFilePath, sqlite.OPEN_READWRITE || sqlite.OPEN_CREATE, async (err) => {
         if (err) {
