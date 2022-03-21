@@ -1,5 +1,5 @@
 <template>
-  <q-item :active="active" clickable v-ripple>
+  <q-item class="sidebar-item" :active="active" clickable v-ripple>
     <q-item-section avatar>
       <q-icon :name="iconName"></q-icon>
     </q-item-section>
@@ -12,7 +12,7 @@
 
 <script>
 export default {
-  name: 'LeftMenuItem',
+  name: 'SidebarItem',
   props: {
     active: Boolean,
     name: String,
@@ -22,4 +22,7 @@ export default {
 </script>
 
 <style>
+  .sidebar-item {
+    padding: 8px 22px 8px 22px;
+  }
 </style>

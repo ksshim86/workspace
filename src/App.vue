@@ -6,9 +6,8 @@
         <!-- <bar style="top: 2px; position: relative;" /> -->
         <bar />
       </q-header>
-      <left-menu isWorkspace="isWorkspace" />
-      <q-page-container class="fullscreen" ref="container"
-        style="padding: 0px; margin-top: 32px; margin-left: 57px;">
+      <sidebar v-if="isWorkspace" />
+      <q-page-container>
           <q-resize-observer @resize="onResize"/>
           <router-view :contentHeight="Math.floor(contentHeight)" />
       </q-page-container>
@@ -19,12 +18,12 @@
 import { mapActions, mapGetters } from 'vuex'
 import { dom } from 'quasar'
 import Bar from './components/Bar'
-import LeftMenu from './components/LeftMenu.vue'
+import Sidebar from './components/Sidebar.vue'
 
 const { offset } = dom
 
 export default {
-  components: { Bar, LeftMenu },
+  components: { Bar, Sidebar },
   name: 'App',
   data () {
     return {
