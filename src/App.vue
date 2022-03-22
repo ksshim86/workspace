@@ -8,7 +8,6 @@
       </q-header>
       <sidebar v-if="isWorkspace" />
       <q-page-container>
-          <q-resize-observer @resize="onResize"/>
           <router-view :contentHeight="Math.floor(contentHeight)" />
       </q-page-container>
     </q-layout>
@@ -16,11 +15,10 @@
 </template>
 <script>
 import { mapActions, mapGetters } from 'vuex'
-import { dom, Dark } from 'quasar'
+import { Dark } from 'quasar'
 import Bar from './components/Bar'
 import Sidebar from './components/Sidebar.vue'
 
-const { offset } = dom
 Dark.set(false)
 
 export default {
@@ -51,12 +49,6 @@ export default {
     })
   },
   methods: {
-    onResize () {
-      const containerTop = offset(this.$refs.container.$el).top
-      const height = this.$refs.container.$el.clientHeight
-
-      this.contentHeight = height - containerTop - 16
-    },
     ...mapActions({
       fetchIsWorkspace: 'todo/FETCH_IS_WORKSPACE'
     })

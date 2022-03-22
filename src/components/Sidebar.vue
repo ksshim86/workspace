@@ -8,7 +8,7 @@
 
       :mini="!drawer || miniState"
 
-      :width="200"
+      :width="250"
       :breakpoint="500"
       bordered
     >
@@ -36,12 +36,17 @@
               icon-name="fas fa-plus"
             />
           </div>
-          <div @click="handleNewProjectDialogOpenClicked">
-            <sidebar-item
-              :active="false"
-              name="Dark mode"
-              icon-name="dark_mode"
-            />
+          <q-separator />
+          <div>
+            <q-item :active="false" clickable v-ripple @click="isDark = !isDark">
+              <q-item-section avatar v-if="!miniState">
+                <q-icon name="dark_mode"></q-icon>
+              </q-item-section>
+              <q-item-section v-if="!miniState">Dark Mode</q-item-section>
+              <q-item-section avatar>
+                <q-toggle dense size="xs" color="red" v-model="isDark" />
+              </q-item-section>
+            </q-item>
           </div>
         </q-list>
       </q-scroll-area>
@@ -61,6 +66,7 @@
 </template>
 
 <script>
+import { Dark } from 'quasar'
 import SidebarItem from './SidebarItem.vue'
 import NewProjectDialog from './project/NewProjectDialog.vue'
 
@@ -72,6 +78,7 @@ export default {
       drawer: false,
       miniState: false,
       miniIcon: 'chevron_left',
+      isDark: false,
       menu: [
         {
           name: 'dashboard',
@@ -89,6 +96,11 @@ export default {
           isActive: false,
         }
       ],
+    }
+  },
+  watch: {
+    isDark (val) {
+      Dark.set(val)
     }
   },
   methods: {
@@ -117,7 +129,7 @@ export default {
       }
     },
     handleNewProjectDialogOpenClicked () {
-      this.$refs.newProjectDialog.isOpen = true
+      this.$refs.newProjectDialog.dialogOpen()
     },
   }
 }

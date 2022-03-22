@@ -1,8 +1,8 @@
 <template>
-  <div class="window-height">
+  <q-page padding>
     <h3>This is DashBoard/</h3>
     <h3>Almost before we knew it,</h3>
-  </div>
+  </q-page>
 </template>
 
 <script>

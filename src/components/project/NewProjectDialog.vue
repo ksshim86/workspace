@@ -6,7 +6,7 @@
       no-esc-dismiss
       @hide="dialogHide"
     >
-      <q-card class="my-card" dark style="width: 500px;">
+      <q-card class="my-card" style="width: 500px;">
         <q-card-section class="row items-center q-py-xs">
           <div class="text-overline">새로운 프로젝트 등록</div>
           <q-space />
@@ -23,10 +23,9 @@
           <q-card-section>
             <q-btn fab-mini color="indigo" class="float-left q-ma-sm"
               @click="imageUploadDialog = true">
-              <q-avatar text-color="white" icon="far fa-image" />
+              <q-avatar icon="far fa-image" />
             </q-btn>
             <q-input
-              dark
               v-model="project.name"
               label="프로젝트 이름"
               :rules="[ val => val && val.length > 0 || 'Please type something']"
@@ -57,7 +56,7 @@
     </q-dialog>
     <q-dialog v-model="imageUploadDialog"
       persistent transition-show="scale" transition-hide="scale">
-      <q-card class="my-card" dark style="width: 500px">
+      <q-card class="my-card" style="width: 500px">
         <q-card-section class="row items-center q-py-xs">
           <div class="text-overline">아바타 선택</div>
           <q-space />
@@ -70,17 +69,19 @@
         >
           <q-card-section>
             <div class="row q-gutter-md">
-              <div class="col text-center q-pa-md" style="background-color: #1b1c1d;">
+              <div :class="[this.$q.dark.isActive ?
+               classObj.npdColDark : classObj.npdCol, classObj.defaultCol]">
                 <div class="row full-height items-center justify-center">
                   <q-btn fab-mini color="indigo">
-                    <q-avatar size="100px" text-color="white" icon="far fa-image" />
+                    <q-avatar size="100px" icon="far fa-image" />
                   </q-btn>
                   <div class="text-caption q-mt-md">이미지 업로드</div>
                 </div>
               </div>
-              <div class="col text-center q-pa-md" style="background-color: #1b1c1d;">
+              <div :class="[this.$q.dark.isActive ?
+               classObj.npdColDark : classObj.npdCol, classObj.defaultCol]">
                 <div class="row full-height items-center justify-center">
-                  <q-input square outlined dark v-model="text"
+                  <q-input square outlined v-model="project.initial"
                     mask="X" placeholder="한 문자만 입력"
                   />
                   <div class="text-caption q-mt-md">이니셜 입력</div>
@@ -108,9 +109,15 @@ export default {
         name: '',
         avatar: '',
         avatarName: '',
+        initial: '',
       },
       files: null,
       imageUploadDialog: false,
+      classObj: {
+        defaultCol: 'col text-center q-pa-md',
+        npdCol: 'npd-col',
+        npdColDark: 'npd-col-dark',
+      }
     }
   },
   computed: {
@@ -119,6 +126,9 @@ export default {
     }
   },
   methods: {
+    dialogOpen () {
+      this.isOpen = true
+    },
     onSubmit () {},
     updateFiles (newFiles) {
       const reader = new FileReader()
@@ -149,4 +159,11 @@ export default {
 </script>
 
 <style>
+  .npd-col {
+    border: 1px solid;
+    border-color: lightsteelblue;
+  }
+  .npd-col-dark {
+    background-color: #1b1c1d;
+  }
 </style>
