@@ -9,10 +9,8 @@
       :mini="!drawer || miniState"
 
       :width="200"
-      :mini-width="70"
       :breakpoint="500"
       bordered
-      content-class="bg-grey-3"
     >
       <!-- drawer content -->
       <q-scroll-area class="fit" :style="`overflow: hidden;`">
@@ -36,6 +34,13 @@
               :active="false"
               name="Add Project"
               icon-name="fas fa-plus"
+            />
+          </div>
+          <div @click="handleNewProjectDialogOpenClicked">
+            <sidebar-item
+              :active="false"
+              name="Dark mode"
+              icon-name="dark_mode"
             />
           </div>
         </q-list>

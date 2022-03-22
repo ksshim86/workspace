@@ -16,11 +16,12 @@
 </template>
 <script>
 import { mapActions, mapGetters } from 'vuex'
-import { dom } from 'quasar'
+import { dom, Dark } from 'quasar'
 import Bar from './components/Bar'
 import Sidebar from './components/Sidebar.vue'
 
 const { offset } = dom
+Dark.set(false)
 
 export default {
   components: { Bar, Sidebar },
