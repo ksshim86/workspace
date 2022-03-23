@@ -3,7 +3,7 @@
     <q-item-section avatar>
       <q-icon :name="iconName"></q-icon>
     </q-item-section>
-    <q-item-section>{{name}}</q-item-section>
+    <q-item-section class="text-weight-bold">{{name}}</q-item-section>
     <q-tooltip v-if="miniState" content-class="bg-dark text-white"
       anchor="center right" self="center left" :offset="[10, 10]">
       <strong>{{name}}</strong>
@@ -23,5 +23,5 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
 </style>

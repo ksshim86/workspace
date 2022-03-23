@@ -15,13 +15,6 @@
       <!-- drawer content -->
       <q-scroll-area class="fit" :style="`overflow: hidden;`">
         <q-list padding>
-          <q-item>
-            <q-item-section avatar>
-              <q-icon name="workspaces"></q-icon>
-            </q-item-section>
-            <q-item-section>Workspace</q-item-section>
-          </q-item>
-          <q-separator />
           <div @click="handleLeftMenuClicked(menu[0])">
             <sidebar-item
               :active="menu[0].isActive"
@@ -52,9 +45,9 @@
               <q-item-section avatar v-if="!miniState">
                 <q-icon name="dark_mode"></q-icon>
               </q-item-section>
-              <q-item-section v-if="!miniState">Dark Mode</q-item-section>
+              <q-item-section v-if="!miniState" class="text-weight-bold">Dark Mode</q-item-section>
               <q-item-section avatar>
-                <q-toggle dense size="xs" color="red" v-model="isDark" />
+                <q-toggle dense size="xs" color="orange" v-model="isDark" />
               </q-item-section>
             </q-item>
           </div>
@@ -65,7 +58,7 @@
           round
           unelevated
           size="10px"
-          color="accent"
+          color="orange"
           :icon="miniIcon"
           @click="drawerClick"
         />
