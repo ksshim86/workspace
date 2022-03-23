@@ -1,5 +1,7 @@
 <template>
-  <div class="page">This is Wiki</div>
+  <q-page padding>
+    This is Wiki.
+  </q-page>
 </template>
 
 <script>
@@ -9,8 +11,4 @@ export default {
 </script>
 
 <style lang="scss">
-  .page {
-    background-color: #36393F;
-    height: -webkit-fill-available;
-  }
 </style>

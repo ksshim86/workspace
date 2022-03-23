@@ -4,10 +4,10 @@
       <q-icon :name="iconName"></q-icon>
     </q-item-section>
     <q-item-section>{{name}}</q-item-section>
-    <!-- <q-tooltip content-class="bg-dark text-white"
+    <q-tooltip v-if="miniState" content-class="bg-dark text-white"
       anchor="center right" self="center left" :offset="[10, 10]">
       <strong>{{name}}</strong>
-    </q-tooltip> -->
+    </q-tooltip>
   </q-item>
 </template>
 
@@ -18,6 +18,7 @@ export default {
     active: Boolean,
     name: String,
     iconName: String,
+    miniState: Boolean,
   },
 }
 </script>

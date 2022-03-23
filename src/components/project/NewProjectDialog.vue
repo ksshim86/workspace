@@ -24,6 +24,10 @@
             <q-btn fab-mini color="indigo" class="float-left q-ma-sm"
               @click="imageUploadDialog = true">
               <q-avatar icon="far fa-image" />
+              <q-tooltip content-class="bg-dark text-white"
+               :offset="[10, 10]">
+                <strong>아바타를 등록하세요.</strong>
+              </q-tooltip>
             </q-btn>
             <q-input
               v-model="project.name"

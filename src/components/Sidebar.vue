@@ -8,18 +8,26 @@
 
       :mini="!drawer || miniState"
 
-      :width="250"
+      :width="230"
       :breakpoint="500"
       bordered
     >
       <!-- drawer content -->
       <q-scroll-area class="fit" :style="`overflow: hidden;`">
         <q-list padding>
+          <q-item>
+            <q-item-section avatar>
+              <q-icon name="workspaces"></q-icon>
+            </q-item-section>
+            <q-item-section>Workspace</q-item-section>
+          </q-item>
+          <q-separator />
           <div @click="handleLeftMenuClicked(menu[0])">
             <sidebar-item
               :active="menu[0].isActive"
               name="Dashboard"
               icon-name="space_dashboard"
+              :miniState="!drawer || miniState"
             />
           </div>
           <div @click="handleLeftMenuClicked(menu[1])">
@@ -27,6 +35,7 @@
               :active="menu[1].isActive"
               name="Wiki"
               icon-name="fab fa-wikipedia-w"
+              :miniState="!drawer || miniState"
             />
           </div>
           <div @click="handleNewProjectDialogOpenClicked">
@@ -34,6 +43,7 @@
               :active="false"
               name="Add Project"
               icon-name="fas fa-plus"
+              :miniState="!drawer || miniState"
             />
           </div>
           <q-separator />
