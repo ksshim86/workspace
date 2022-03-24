@@ -34,22 +34,6 @@
               label="프로젝트 이름"
               :rules="[ val => val && val.length > 0 || 'Please type something']"
             />
-            <!-- <q-file
-              :value="files"
-              label="Select Avatar image"
-              label-color="white"
-              @input="updateFiles"
-            >
-              <template v-slot:before>
-                <q-avatar square size="50px">
-                  <q-icon v-if="isAvatar" name="far fa-image" />
-                  <q-img
-                    v-else
-                    :src="project.avatar"
-                  />
-                </q-avatar>
-              </template>
-            </q-file> -->
           </q-card-section>
           <q-card-section align="right">
             <q-btn flat label="닫기" v-close-popup />
@@ -76,9 +60,10 @@
               <div :class="[this.$q.dark.isActive ?
                classObj.npdColDark : classObj.npdCol, classObj.defaultCol]">
                 <div class="row full-height items-center justify-center">
-                  <q-btn fab-mini color="indigo">
+                  <q-btn v-if="isAvatar" fab-mini color="indigo" @click="uploadClick()">
                     <q-avatar size="100px" icon="far fa-image" />
                   </q-btn>
+                  <q-img v-else img-class="custom-img" :src="project.avatar" />
                   <div class="text-caption q-mt-md">이미지 업로드</div>
                 </div>
               </div>
@@ -92,6 +77,15 @@
                 </div>
               </div>
             </div>
+            <q-file
+              ref="avatarFile"
+              v-show="false"
+              :value="files"
+              label="Select Avatar image"
+              label-color="white"
+              @input="updateFiles"
+            >
+            </q-file>
           </q-card-section>
           <q-card-section align="right">
             <q-btn flat label="취소" v-close-popup />
@@ -133,6 +127,9 @@ export default {
     dialogOpen () {
       this.isOpen = true
     },
+    uploadClick () {
+      this.$refs.avatarFile.pickFiles()
+    },
     onSubmit () {},
     updateFiles (newFiles) {
       const reader = new FileReader()
@@ -169,5 +166,9 @@ export default {
   }
   .npd-col-dark {
     background-color: #1b1c1d;
+  }
+  .custom-img {
+    width: 100px;
+    height: 100px;
   }
 </style>
