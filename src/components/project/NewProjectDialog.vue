@@ -21,14 +21,39 @@
           @submit="onSubmit"
         >
           <q-card-section>
-            <q-btn fab-mini color="indigo" class="float-left q-ma-sm"
-              @click="imageUploadDialog = true">
+            <q-btn v-if="isAvatar" fab-mini color="indigo" class="float-left q-ma-sm"
+              @click="uploadClick()">
               <q-avatar icon="far fa-image" />
               <q-tooltip content-class="bg-dark text-white"
                :offset="[10, 10]">
                 <strong>아바타를 등록하세요.</strong>
               </q-tooltip>
             </q-btn>
+            <q-img
+              v-else
+              class="float-left q-ma-sm"
+              width="60px"
+              :ratio="1"
+              :src="project.avatar"
+              @mouseenter="imgOver = true"
+              @mouseleave="imgOver = false"
+            >
+              <div v-if="imgOver"
+                class="absolute-full flex flex-center non-selectable cursor-pointer"
+                @click="uploadClick()"
+              >
+                변경
+              </div>
+            </q-img>
+            <q-file
+              ref="avatarFile"
+              v-show="false"
+              :value="files"
+              label="Select Avatar image"
+              label-color="white"
+              @input="updateFiles"
+            >
+            </q-file>
             <q-input
               v-model="project.name"
               label="프로젝트 이름"
@@ -63,7 +88,8 @@
                   <q-btn v-if="isAvatar" fab-mini color="indigo" @click="uploadClick()">
                     <q-avatar size="100px" icon="far fa-image" />
                   </q-btn>
-                  <q-img v-else img-class="custom-img" :src="project.avatar" />
+                  <q-img v-else img-class="custom-img" :src="project.avatar"
+                    @click="uploadClick()" />
                   <div class="text-caption q-mt-md">이미지 업로드</div>
                 </div>
               </div>
@@ -77,15 +103,6 @@
                 </div>
               </div>
             </div>
-            <q-file
-              ref="avatarFile"
-              v-show="false"
-              :value="files"
-              label="Select Avatar image"
-              label-color="white"
-              @input="updateFiles"
-            >
-            </q-file>
           </q-card-section>
           <q-card-section align="right">
             <q-btn flat label="취소" v-close-popup />
@@ -107,10 +124,10 @@ export default {
         name: '',
         avatar: '',
         avatarName: '',
-        initial: '',
       },
       files: null,
       imageUploadDialog: false,
+      imgOver: false,
       classObj: {
         defaultCol: 'col text-center q-pa-md',
         npdCol: 'npd-col',
