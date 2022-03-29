@@ -19,15 +19,35 @@ class SystemRepository {
     return res
   }
 
+  async createTableProject () {
+    const sql = `
+    CREATE TABLE IF NOT EXISTS project (
+      id INTEGER NOT NULL UNIQUE,
+      name TEXT NOT NULL,
+      path TEXT NOT NULL,
+      avatar BLOB NULL,
+      avatar_name TEXT NULL,
+      del_yn TEXT NOT NULL DEFAULT 'N',
+      PRIMARY KEY(id AUTOINCREMENT)
+    )
+    `
+
+    const res = await this.dao.run(sql)
+
+    return res
+  }
+
   async createTableWork () {
     const sql = `
     CREATE TABLE IF NOT EXISTS work (
       id INTEGER NOT NULL UNIQUE,
+      project_id INTEGER NOT NULL,
       name TEXT NOT NULL,
       key TEXT NOT NULL,
       path TEXT NOT NULL,
       del_yn TEXT NOT NULL DEFAULT 'N',
-      PRIMARY KEY(id AUTOINCREMENT)
+      PRIMARY KEY(id AUTOINCREMENT),
+      FOREIGN KEY(project_id) REFERENCES project(id)
     )
     `
 
@@ -39,7 +59,7 @@ class SystemRepository {
   async createTableTodo () {
     const sql = `
     CREATE TABLE IF NOT EXISTS todo (
-      no INTEGER NOT NULL UNIQUE,
+      id INTEGER NOT NULL UNIQUE,
       work_id INTEGER NOT NULL, 
       title TEXT NOT NULL,
       content TEXT,
@@ -48,7 +68,7 @@ class SystemRepository {
       due_dt TEXT,
       file_id TEXT,
       del_yn TEXT NOT NULL DEFAULT 'N',
-      PRIMARY KEY(no),
+      PRIMARY KEY(id AUTOINCREMENT),
       FOREIGN KEY(work_id) REFERENCES work(id)
     )
     `
@@ -75,7 +95,7 @@ class SystemRepository {
     const sql = `
     CREATE TABLE IF NOT EXISTS tag_todo_map (
       work_id INTEGER REFERENCES work (id),
-      todo_no INTEGER REFERENCES todo (no),
+      todo_id INTEGER REFERENCES todo (id),
       tag_id  INTEGER REFERENCES tag (id) 
     )
     `

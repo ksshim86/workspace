@@ -75,6 +75,7 @@ app.on('activate', () => {
 
 async function init () {
   await systemRepository.createTableSystemInfo()
+  await systemRepository.createTableProject()
   await systemRepository.createTableWork()
   await systemRepository.createTableTodo()
   await systemRepository.createTableTag()
