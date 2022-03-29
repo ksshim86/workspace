@@ -43,11 +43,16 @@
           <div>
             <q-item :active="false" clickable v-ripple @click="isDark = !isDark">
               <q-item-section avatar v-if="!miniState">
-                <q-icon name="dark_mode"></q-icon>
+                <q-icon v-if="isDark" name="light_mode"></q-icon>
+                <q-icon v-else name="dark_mode"></q-icon>
               </q-item-section>
-              <q-item-section v-if="!miniState" class="text-weight-bold">Dark Mode</q-item-section>
+              <q-item-section v-if="!miniState" class="text-weight-bold">
+                <div v-if="isDark">Light Mode</div>
+                <div v-else>Dark Mode</div>
+              </q-item-section>
               <q-item-section avatar>
-                <q-toggle dense size="xs" color="orange" v-model="isDark" />
+                <q-toggle dense size="xs" color="orange"
+                  v-model="isDark" @click="isDark = !isDark" />
               </q-item-section>
             </q-item>
           </div>
