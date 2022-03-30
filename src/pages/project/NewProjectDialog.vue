@@ -57,7 +57,11 @@
             <q-input
               v-model="project.name"
               label="프로젝트 이름"
-              :rules="[ val => val && val.length > 0 || 'Please type something']"
+              :rules="[
+                val => val && val.length > 0 || '프로젝트 이름을 입력하세요',
+                val => val && val.match(regExp) == null
+                  || regExpComment
+              ]"
             />
           </q-card-section>
           <q-card-section align="right">
@@ -67,54 +71,12 @@
         </q-form>
       </q-card>
     </q-dialog>
-    <q-dialog v-model="imageUploadDialog"
-      persistent transition-show="scale" transition-hide="scale">
-      <q-card class="my-card" style="width: 500px">
-        <q-card-section class="row items-center q-py-xs">
-          <div class="text-overline">아바타 선택</div>
-          <q-space />
-          <q-btn icon="close" flat dense v-close-popup />
-        </q-card-section>
-        <q-separator />
-        <q-form
-          class="q-gutter-md"
-          @submit="onSubmit"
-        >
-          <q-card-section>
-            <div class="row q-gutter-md">
-              <div :class="[this.$q.dark.isActive ?
-               classObj.npdColDark : classObj.npdCol, classObj.defaultCol]">
-                <div class="row full-height items-center justify-center">
-                  <q-btn v-if="isAvatar" fab-mini color="indigo" @click="uploadClick()">
-                    <q-avatar size="100px" icon="far fa-image" />
-                  </q-btn>
-                  <q-img v-else img-class="custom-img" :src="project.avatar"
-                    @click="uploadClick()" />
-                  <div class="text-caption q-mt-md">이미지 업로드</div>
-                </div>
-              </div>
-              <div :class="[this.$q.dark.isActive ?
-               classObj.npdColDark : classObj.npdCol, classObj.defaultCol]">
-                <div class="row full-height items-center justify-center">
-                  <q-input square outlined v-model="project.initial"
-                    mask="X" placeholder="한 문자만 입력"
-                  />
-                  <div class="text-caption q-mt-md">이니셜 입력</div>
-                </div>
-              </div>
-            </div>
-          </q-card-section>
-          <q-card-section align="right">
-            <q-btn flat label="취소" v-close-popup />
-            <q-btn flat type="submit" label="완료" />
-          </q-card-section>
-        </q-form>
-      </q-card>
-    </q-dialog>
   </div>
 </template>
 
 <script>
+import { ipcRenderer } from 'electron'
+
 export default {
   name: 'NewProjectDialog',
   data () {
@@ -132,7 +94,9 @@ export default {
         defaultCol: 'col text-center q-pa-md',
         npdCol: 'npd-col',
         npdColDark: 'npd-col-dark',
-      }
+      },
+      regExp: /\/|\\|:|\*|\?|"|<|>|\/|\|/g,
+      regExpComment: '다음 문자를 사용할 수 없습니다 \\ / : * ? " < > |',
     }
   },
   computed: {
@@ -147,7 +111,18 @@ export default {
     uploadClick () {
       this.$refs.avatarFile.pickFiles()
     },
-    onSubmit () {},
+    async onSubmit () {
+      const obj = await ipcRenderer.invoke('insertProject', this.project)
+
+      if (obj.result) {
+        this.$q.notify({
+          type: 'positive',
+          message: '프로젝트 생성 완료',
+          position: 'bottom-right',
+          timeout: 2500,
+        })
+      }
+    },
     updateFiles (newFiles) {
       const reader = new FileReader()
 

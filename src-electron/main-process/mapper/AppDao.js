@@ -24,6 +24,7 @@ class AppDao {
           console.log(`Error running sql ${sql}`)
           console.log(err)
           obj.result = false
+          obj.message = err
           reject(obj)
         } else {
           console.log(`Running sql ${sql}`)

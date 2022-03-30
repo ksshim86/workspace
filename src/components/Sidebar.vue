@@ -76,7 +76,7 @@
 <script>
 import { Dark } from 'quasar'
 import SidebarItem from './SidebarItem.vue'
-import NewProjectDialog from './project/NewProjectDialog.vue'
+import NewProjectDialog from '../pages/project/NewProjectDialog.vue'
 
 export default {
   components: { SidebarItem, NewProjectDialog },

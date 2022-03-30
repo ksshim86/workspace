@@ -10,7 +10,7 @@ appIpc.handle('selectWorks', async () => {
   const obj = {
     result: true,
     message: '',
-    rows: {}
+    rows: {},
   }
 
   const res = await workService.selectWorks()
@@ -33,7 +33,7 @@ appIpc.handle('insertWork', async (event, args) => {
   }
   const obj = {
     result: true,
-    message: ''
+    message: '',
   }
 
   const rootPath = await selectRootPath()
