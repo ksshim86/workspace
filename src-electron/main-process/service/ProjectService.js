@@ -28,6 +28,12 @@ class ProjectService {
 
     return this.repository.insertProject(params)
   }
+
+  async selectProjects () {
+    const res = this.repository.selectProjects()
+
+    return res
+  }
 }
 
 export default new ProjectService({ projectRepository, systemService })

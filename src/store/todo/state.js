@@ -4,6 +4,7 @@ export default function state () {
     works: [],
     selectedWork: {},
     editWorkId: null,
-    todos: []
+    todos: [],
+    projects: [],
   }
 }

@@ -21,3 +21,22 @@ appIpc.handle('insertProject', async (event, args) => {
 
   return obj
 })
+
+appIpc.handle('selectProjects', async () => {
+  const obj = {
+    result: true,
+    message: '',
+    rows: {},
+  }
+
+  try {
+    const res = await projectService.selectProjects()
+
+    obj.rows = res.rows
+  } catch (error) {
+    obj.result = false
+    obj.message = error.message
+  }
+
+  return obj
+})

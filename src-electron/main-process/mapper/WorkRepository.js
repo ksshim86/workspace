@@ -5,7 +5,7 @@ class WorkRepository {
     this.dao = dao
   }
 
-  async selectWorks () {
+  selectWorks () {
     const sql = `
     SELECT
       id, name, key, path, del_yn as delYn
@@ -15,15 +15,15 @@ class WorkRepository {
       del_yn = 'N'
     `
 
-    return await this.dao.all(sql)
+    return this.dao.all(sql)
   }
 
-  async insertWork (params = []) {
+  insertWork (params = []) {
     const sql = `
     INSERT INTO work (name, key, path) VALUES (?, ?, ?)
     `
 
-    return await this.dao.run(sql, params)
+    return this.dao.run(sql, params)
   }
 }
 

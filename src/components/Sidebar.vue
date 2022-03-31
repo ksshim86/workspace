@@ -31,6 +31,17 @@
               :miniState="!drawer || miniState"
             />
           </div>
+          <q-separator />
+          <div v-for="project in projects" :key="project.id">
+            <div>
+              <sidebar-item
+                :active="menu[1].isActive"
+                :name="project.name"
+                icon-name="fab fa-wikipedia-w"
+                :miniState="!drawer || miniState"
+              />
+            </div>
+          </div>
           <div @click="handleNewProjectDialogOpenClicked">
             <sidebar-item
               :active="false"
@@ -74,6 +85,7 @@
 </template>
 
 <script>
+import { mapActions, mapGetters } from 'vuex'
 import { Dark } from 'quasar'
 import SidebarItem from './SidebarItem.vue'
 import NewProjectDialog from '../pages/project/NewProjectDialog.vue'
@@ -111,10 +123,16 @@ export default {
       Dark.set(val)
     }
   },
+  created () {
+    this.fetchProjects()
+  },
+  computed: {
+    ...mapGetters({
+      projects: 'todo/GET_PROJECTS'
+    })
+  },
   methods: {
     drawerClick () {
-      // if in "mini" state and user
-      // click on drawer, we switch it to "normal" mode
       if (this.miniState) {
         this.miniState = false
         this.miniIcon = 'chevron_left'
@@ -139,6 +157,9 @@ export default {
     handleNewProjectDialogOpenClicked () {
       this.$refs.newProjectDialog.dialogOpen()
     },
+    ...mapActions({
+      fetchProjects: 'todo/FETCH_PROJECTS'
+    })
   }
 }
 </script>

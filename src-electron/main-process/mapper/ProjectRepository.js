@@ -5,7 +5,7 @@ class SystemRepository {
     this.dao = dao
   }
 
-  async insertProject (params = []) {
+  insertProject (params = []) {
     const sql = `
       INSERT INTO project
       (
@@ -23,7 +23,20 @@ class SystemRepository {
       )
     `
 
-    const res = await this.dao.run(sql, params)
+    return this.dao.run(sql, params)
+  }
+
+  async selectProjects () {
+    const sql = `
+    SELECT
+      id, name, path, avatar, avatar_name, del_yn
+    FROM
+      project
+    WHERE
+      del_yn = 'N'
+    `
+
+    const res = await this.dao.all(sql)
 
     return res
   }

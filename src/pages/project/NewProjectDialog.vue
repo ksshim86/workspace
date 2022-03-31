@@ -121,6 +121,8 @@ export default {
           position: 'bottom-right',
           timeout: 2500,
         })
+
+        this.isOpen = false
       }
     },
     updateFiles (newFiles) {
