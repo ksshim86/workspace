@@ -37,7 +37,7 @@
               <sidebar-item
                 :active="menu[1].isActive"
                 :name="project.name"
-                icon-name="fab fa-wikipedia-w"
+                :avatar="project.avatar"
                 :miniState="!drawer || miniState"
               />
             </div>

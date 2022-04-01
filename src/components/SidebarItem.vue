@@ -1,7 +1,13 @@
 <template>
   <q-item :active="active" clickable v-ripple>
     <q-item-section avatar>
-      <q-icon :name="iconName"></q-icon>
+      <q-icon v-if="avatar === undefined" :name="iconName"></q-icon>
+      <q-img
+        v-else
+        width="24px"
+        :ratio="1"
+        :src="avatar"
+      />
     </q-item-section>
     <q-item-section class="text-weight-bold">{{name}}</q-item-section>
     <q-tooltip v-if="miniState" content-class="bg-dark text-white"
@@ -19,6 +25,7 @@ export default {
     name: String,
     iconName: String,
     miniState: Boolean,
+    avatar: String,
   },
 }
 </script>
