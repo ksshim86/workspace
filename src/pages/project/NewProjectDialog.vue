@@ -84,6 +84,7 @@ export default {
       isOpen: false,
       project: {
         name: '',
+        initial: '',
         avatar: '',
         avatarName: '',
       },
@@ -102,6 +103,13 @@ export default {
   computed: {
     isAvatar () {
       return this.project.avatar === ''
+    },
+    initial () {
+      if (this.project.name.length > 0) {
+        return this.project.name.charAt(0)
+      }
+
+      return ''
     }
   },
   methods: {
@@ -112,6 +120,8 @@ export default {
       this.$refs.avatarFile.pickFiles()
     },
     async onSubmit () {
+      this.project.initial = this.initial
+
       const obj = await ipcRenderer.invoke('insertProject', this.project)
 
       if (obj.result) {
@@ -144,6 +154,7 @@ export default {
     dialogHide () {
       this.project = {
         name: '',
+        initial: '',
         avatar: '',
         avatarName: '',
       }

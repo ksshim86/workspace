@@ -12,10 +12,12 @@ class SystemRepository {
         name,
         avatar,
         avatar_name,
+        initial,
         path
       )
       VALUES
       (
+        ?,
         ?,
         ?,
         ?,
@@ -29,7 +31,7 @@ class SystemRepository {
   async selectProjects () {
     const sql = `
     SELECT
-      id, name, path, avatar, avatar_name, del_yn
+      id, name, path, initial, avatar, avatar_name, del_yn
     FROM
       project
     WHERE

@@ -13,7 +13,7 @@
       bordered
     >
       <!-- drawer content -->
-      <q-scroll-area class="fit" :style="`overflow: hidden;`">
+      <q-scroll-area class="fit" :style="`overflow: hidden; padding-bottom: 100px;`">
         <q-list padding>
           <div @click="handleLeftMenuClicked(menu[0])">
             <sidebar-item
@@ -35,37 +35,41 @@
           <div v-for="project in projects" :key="project.id">
             <div>
               <sidebar-item
+                :isProject="true"
                 :active="menu[1].isActive"
                 :name="project.name"
                 :avatar="project.avatar"
+                :initial="project.initial"
                 :miniState="!drawer || miniState"
               />
             </div>
           </div>
-          <div @click="handleNewProjectDialogOpenClicked">
-            <sidebar-item
-              :active="false"
-              name="Add Project"
-              icon-name="fas fa-plus"
-              :miniState="!drawer || miniState"
-            />
-          </div>
-          <q-separator />
-          <div>
-            <q-item :active="false" clickable v-ripple @click="isDark = !isDark">
-              <q-item-section avatar v-if="!miniState">
-                <q-icon v-if="isDark" name="light_mode"></q-icon>
-                <q-icon v-else name="dark_mode"></q-icon>
-              </q-item-section>
-              <q-item-section v-if="!miniState" class="text-weight-bold">
-                <div v-if="isDark">Light Mode</div>
-                <div v-else>Dark Mode</div>
-              </q-item-section>
-              <q-item-section avatar>
-                <q-toggle dense size="xs" color="orange"
-                  v-model="isDark" @click="isDark = !isDark" />
-              </q-item-section>
-            </q-item>
+          <div class="fixed-bottom">
+            <q-separator />
+            <div @click="handleNewProjectDialogOpenClicked">
+              <sidebar-item
+                :active="false"
+                name="Add Project"
+                icon-name="fas fa-plus"
+                :miniState="!drawer || miniState"
+              />
+            </div>
+            <div>
+              <q-item :active="false" clickable v-ripple @click="isDark = !isDark">
+                <q-item-section avatar v-if="!miniState">
+                  <q-icon v-if="isDark" name="light_mode"></q-icon>
+                  <q-icon v-else name="dark_mode"></q-icon>
+                </q-item-section>
+                <q-item-section v-if="!miniState" class="text-weight-bold">
+                  <div v-if="isDark">Light Mode</div>
+                  <div v-else>Dark Mode</div>
+                </q-item-section>
+                <q-item-section avatar>
+                  <q-toggle dense size="xs" color="orange"
+                    v-model="isDark" @click="isDark = !isDark" />
+                </q-item-section>
+              </q-item>
+            </div>
           </div>
         </q-list>
       </q-scroll-area>

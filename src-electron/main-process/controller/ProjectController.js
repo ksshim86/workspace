@@ -9,7 +9,7 @@ appIpc.handle('insertProject', async (event, args) => {
 
   try {
     const project = JSON.parse(JSON.stringify(args))
-    const params = [project.name, project.avatar, project.avatarName]
+    const params = [project.name, project.avatar, project.avatarName, project.initial]
 
     const res = await projectService.insertProject(params)
 

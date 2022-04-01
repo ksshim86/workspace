@@ -25,6 +25,7 @@ class SystemRepository {
       id INTEGER NOT NULL UNIQUE,
       name TEXT NOT NULL,
       path TEXT NOT NULL,
+      initial TEXT NOT NULL,
       avatar BLOB NULL,
       avatar_name TEXT NULL,
       del_yn TEXT NOT NULL DEFAULT 'N',
