@@ -76,6 +76,7 @@
 
 <script>
 import { ipcRenderer } from 'electron'
+import { mapActions } from 'vuex'
 
 export default {
   name: 'NewProjectDialog',
@@ -132,6 +133,7 @@ export default {
           timeout: 2500,
         })
 
+        this.fetchProjects()
         this.isOpen = false
       }
     },
@@ -160,6 +162,9 @@ export default {
       }
       this.files = null
     },
+    ...mapActions({
+      fetchProjects: 'todo/FETCH_PROJECTS'
+    }),
   },
 }
 </script>
