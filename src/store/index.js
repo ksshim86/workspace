@@ -1,8 +1,8 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
-// import example from './module-example'
 import todo from './todo/index'
+import projet from './project/index'
 
 Vue.use(Vuex)
 
@@ -18,8 +18,8 @@ Vue.use(Vuex)
 export default function (/* { ssrContext } */) {
   const Store = new Vuex.Store({
     modules: {
-      // example
-      todo
+      projectStore: projet,
+      todoStore: todo,
     },
 
     // enable strict mode (adds overhead!)

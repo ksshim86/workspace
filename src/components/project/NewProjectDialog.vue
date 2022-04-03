@@ -163,7 +163,7 @@ export default {
       this.files = null
     },
     ...mapActions({
-      fetchProjects: 'todo/FETCH_PROJECTS'
+      fetchProjects: 'project/FETCH_PROJECTS'
     }),
   },
 }

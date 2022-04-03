@@ -21,7 +21,3 @@ export function GET_WORK_BY_ID (state) {
 export function GET_TODOS (state) {
   return state.todos
 }
-
-export function GET_PROJECTS (state) {
-  return state.projects
-}

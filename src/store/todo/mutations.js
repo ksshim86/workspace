@@ -22,7 +22,3 @@ export function SET_EDIT_WORK_ID (state, id) {
 export function SET_TODOS (state, todos) {
   state.todos = todos
 }
-
-export function SET_PROJECTS (state, projects) {
-  state.projects = projects
-}

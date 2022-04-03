@@ -44,13 +44,13 @@ export default {
     }
   },
   computed: {
-    ...mapGetters({
-      isWorkspace: 'todo/GET_IS_WORKSPACE'
+    ...mapGetters('todoStore', {
+      isWorkspace: 'GET_IS_WORKSPACE'
     })
   },
   methods: {
-    ...mapActions({
-      fetchIsWorkspace: 'todo/FETCH_IS_WORKSPACE'
+    ...mapActions('todoStore', {
+      fetchIsWorkspace: 'FETCH_IS_WORKSPACE'
     })
   }
 }

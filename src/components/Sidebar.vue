@@ -98,7 +98,7 @@
 import { mapActions, mapGetters } from 'vuex'
 import { Dark } from 'quasar'
 import SidebarItem from './SidebarItem.vue'
-import NewProjectDialog from '../pages/project/NewProjectDialog.vue'
+import NewProjectDialog from './project/NewProjectDialog.vue'
 
 export default {
   components: { SidebarItem, NewProjectDialog },
@@ -141,8 +141,8 @@ export default {
     },
   },
   computed: {
-    ...mapGetters({
-      projects: 'todo/GET_PROJECTS'
+    ...mapGetters('projectStore', {
+      projects: 'GET_PROJECTS'
     })
   },
   methods: {
@@ -171,8 +171,8 @@ export default {
     handleNewProjectDialogOpenClicked () {
       this.$refs.newProjectDialog.dialogOpen()
     },
-    ...mapActions({
-      fetchProjects: 'todo/FETCH_PROJECTS'
+    ...mapActions('projectStore', {
+      fetchProjects: 'FETCH_PROJECTS'
     })
   }
 }
