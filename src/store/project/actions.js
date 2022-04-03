@@ -9,3 +9,7 @@ export async function FETCH_PROJECTS (context) {
     }
   }
 }
+
+export async function SET_PROJECT (context, project) {
+  context.commit('SET_PROJECT', project)
+}

@@ -20,7 +20,7 @@
           margin-bottom: 100px;">
         <q-list>
           <div v-for="(project, index) in projects" :key="project.id">
-            <div @click="handleLeftMenuClicked(menu[index + 2])">
+            <div @click="handleLeftMenuClicked(menu[index + 2], project)">
               <sidebar-item
                 :isProject="true"
                 :active="menu[index + 2].isActive"
@@ -31,81 +31,26 @@
               />
             </div>
           </div>
-          <q-menu
-        touch-position
-        context-menu
-      >
-
-        <q-list dense style="min-width: 100px">
-          <q-item clickable v-close-popup>
-            <q-item-section>Open...</q-item-section>
-          </q-item>
-          <q-item clickable v-close-popup>
-            <q-item-section>New</q-item-section>
-          </q-item>
-          <q-separator />
-          <q-item clickable>
-            <q-item-section>Preferences</q-item-section>
-            <q-item-section side>
-              <q-icon name="keyboard_arrow_right" />
-            </q-item-section>
-
-            <q-menu anchor="top end" self="top start">
-              <q-list>
-                <q-item
-                  v-for="n in 3"
-                  :key="n"
-                  dense
-                  clickable
-                >
-                  <q-item-section>Submenu Label</q-item-section>
-                  <q-item-section side>
-                    <q-icon name="keyboard_arrow_right" />
-                  </q-item-section>
-                  <q-menu auto-close anchor="top end" self="top start">
-                    <q-list>
-                      <q-item
-                        v-for="n in 3"
-                        :key="n"
-                        dense
-                        clickable
-                      >
-                        <q-item-section>3rd level Label</q-item-section>
-                      </q-item>
-                    </q-list>
-                  </q-menu>
-                </q-item>
-              </q-list>
-            </q-menu>
-
-          </q-item>
-          <q-separator />
-          <q-item clickable v-close-popup>
-            <q-item-section>Quit</q-item-section>
-          </q-item>
-        </q-list>
-
-      </q-menu>
         </q-list>
       </q-scroll-area>
       <div class="absolute-top" style="height: 97px">
-        <div @click="handleLeftMenuClicked(menu[0])">
-            <sidebar-item
-              :active="menu[0].isActive"
-              name="Dashboard"
-              icon-name="space_dashboard"
-              :miniState="!drawer || miniState"
-            />
-          </div>
-          <div @click="handleLeftMenuClicked(menu[1])">
-            <sidebar-item
-              :active="menu[1].isActive"
-              name="Wiki"
-              icon-name="fab fa-wikipedia-w"
-              :miniState="!drawer || miniState"
-            />
-          </div>
-          <q-separator />
+        <div @click="handleLeftMenuClicked(menu[0], null)">
+          <sidebar-item
+            :active="menu[0].isActive"
+            name="Dashboard"
+            icon-name="space_dashboard"
+            :miniState="!drawer || miniState"
+          />
+        </div>
+        <div @click="handleLeftMenuClicked(menu[1], null)">
+          <sidebar-item
+            :active="menu[1].isActive"
+            name="Wiki"
+            icon-name="fab fa-wikipedia-w"
+            :miniState="!drawer || miniState"
+          />
+        </div>
+        <q-separator />
       </div>
       <div class="absolute-bottom" style="height: 100px">
         <q-separator />
@@ -210,7 +155,7 @@ export default {
         this.miniIcon = 'chevron_right'
       }
     },
-    handleLeftMenuClicked (param) {
+    handleLeftMenuClicked (param, project) {
       this.menu.forEach((el) => {
         if (el.name === param.name) {
           el.isActive = true
@@ -222,12 +167,15 @@ export default {
       if (this.$route.path !== param.path) {
         this.$router.push(param.path)
       }
+
+      this.setProject(project)
     },
     handleNewProjectDialogOpenClicked () {
       this.$refs.newProjectDialog.dialogOpen()
     },
     ...mapActions('projectStore', {
-      fetchProjects: 'FETCH_PROJECTS'
+      fetchProjects: 'FETCH_PROJECTS',
+      setProject: 'SET_PROJECT',
     })
   }
 }
