@@ -162,8 +162,8 @@ export default {
       }
       this.files = null
     },
-    ...mapActions({
-      fetchProjects: 'project/FETCH_PROJECTS'
+    ...mapActions('projectStore', {
+      fetchProjects: 'FETCH_PROJECTS'
     }),
   },
 }

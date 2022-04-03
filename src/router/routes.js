@@ -10,7 +10,7 @@ const routes = [
   { path: '/welcome', component: () => import('pages/Welcome.vue') },
   { path: '/dashboard', component: () => import('pages/DashBoard.vue') },
   { path: '/wiki', component: () => import('pages/Wiki.vue') },
-  { path: '/project', component: () => import('pages/Project.vue') },
+  { path: '/project', component: () => import('pages/ProjectPage.vue') },
   { path: '/todo', component: () => import('pages/TodoPage.vue') },
   // Always leave this as last one,
   // but you can also remove it

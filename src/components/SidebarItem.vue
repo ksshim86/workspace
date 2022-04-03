@@ -13,7 +13,7 @@
 
       </q-avatar>
     </q-item-section>
-    <q-item-section class="text-weight-bold">{{name}}</q-item-section>
+    <q-item-section class="text-weight-bold text-no-wrap">{{name}}</q-item-section>
     <q-tooltip v-if="miniState" content-class="bg-dark text-white"
       anchor="center right" self="center left" :offset="[10, 10]">
       <strong>{{name}}</strong>
